@@ -8,8 +8,8 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QString>
-#include <QMenu>
-
+#include <QDate>
+#include <QCalendarWidget>
 // ehkä hyödylliset includet:
 // Qlistwidget
 // QDialog
@@ -29,16 +29,27 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+
+private slots:
+
+    // function to fetch the dates that user gives
+    void getDate();
+
 private:
 
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
+    QCalendarWidget* calender2;
 
     // Window settings
-    int window_width = 1000;
+    int window_width = 800;
     int window_height = 600;
 
-    QMenu *gameMenu;
-    QMenu *aboutMenu;
+    //dates that user inputs to get the data.
+
+    QDate startDate;
+    int howLong;
+
 
 
 };

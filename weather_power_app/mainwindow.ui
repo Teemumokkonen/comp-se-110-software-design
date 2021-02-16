@@ -26,65 +26,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>20</y>
-      <width>271</width>
-      <height>90</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLabel" name="startTimeLabel">
-         <property name="text">
-          <string>start time</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="endTimeLabel">
-         <property name="text">
-          <string>end time</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="endTimeLabel_2">
-         <property name="text">
-          <string>Analyze</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLineEdit" name="StartLineEdit"/>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="endLineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Start analyzing</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>509</x>
-      <y>130</y>
+      <x>470</x>
+      <y>450</y>
       <width>271</width>
       <height>85</height>
      </rect>
@@ -139,6 +85,84 @@
       <height>521</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QCalendarWidget" name="calender">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>20</y>
+      <width>312</width>
+      <height>183</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="te">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tähän tulee kuvaajat joskus sitten, jos se toimii :D</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>470</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>kuvaaja in english ;)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="data_label">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>400</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>date here whenget data button is pushed :D</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>210</y>
+      <width>241</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>how many days?</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="howManyDays">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>20</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
