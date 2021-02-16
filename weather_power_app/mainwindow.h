@@ -10,6 +10,8 @@
 #include <QString>
 #include <QDate>
 #include <QCalendarWidget>
+
+
 // ehkä hyödylliset includet:
 // Qlistwidget
 // QDialog
@@ -48,6 +50,7 @@ private:
     //dates that user inputs to get the data.
 
     QDate startDate;
+    QDate endDate;
     int howLong;
 
 

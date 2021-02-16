@@ -21,9 +21,9 @@ MainWindow::~MainWindow()
 void MainWindow::getDate()
 {
    startDate = ui->calender->selectedDate();
-   howLong = ui->howManyDays->value(); //.toInt();
-   QString s = QString::number(howLong);
-   ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " + " + s + " days");
+   howLong = ui->howManyDays->value();
+   endDate = startDate.addDays(howLong);
+   ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " to " + endDate.toString("dd.MM.yyyy"));
 
 }
 
