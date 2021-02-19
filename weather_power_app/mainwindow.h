@@ -2,15 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
-#include <QWidget>
-#include <QDialog>
-#include <QLineEdit>
-#include <QLabel>
-#include <QString>
-#include <QDate>
 #include <QCalendarWidget>
-
+#include <QTemporaryFile>
+#include <QNetworkReply>
+#include <QFileDialog>
 
 // ehkä hyödylliset includet:
 // Qlistwidget
@@ -37,15 +32,16 @@ private slots:
 
     // function to fetch the dates that user gives
     void getDate();
+    void fileIsReady( QNetworkReply * reply);
 
 private:
 
     Ui::MainWindow* ui;
     QCalendarWidget* calender2;
 
-    // Window settings
-    int window_width = 800;
-    int window_height = 600;
+    //QNetworkAccessManager *manager;
+    //QNetworkRequest request;
+
 
     //dates that user inputs to get the data.
 

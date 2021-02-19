@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>887</width>
+    <height>595</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,7 @@
       <x>470</x>
       <y>450</y>
       <width>271</width>
-      <height>85</height>
+      <height>87</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -91,9 +91,15 @@
      <rect>
       <x>470</x>
       <y>40</y>
-      <width>312</width>
-      <height>183</height>
+      <width>400</width>
+      <height>210</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
    </widget>
    <widget class="QLabel" name="te">
@@ -138,8 +144,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>250</y>
+      <x>480</x>
+      <y>280</y>
       <width>241</width>
       <height>80</height>
      </rect>
@@ -183,8 +189,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>887</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuperse">
