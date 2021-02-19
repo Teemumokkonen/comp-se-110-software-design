@@ -1,11 +1,18 @@
-#include "mainwindow.h"
+#include "logic.h"
 
 #include <QApplication>
+void startApp();
+Logic* logic;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    startApp();
     return a.exec();
+}
+
+void startApp(){
+    logic->deleteLater();
+    logic = new Logic;
+    logic->init();
 }
