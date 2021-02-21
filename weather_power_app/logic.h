@@ -5,6 +5,8 @@
 #include <QNetworkReply>
 #include <QFileDialog>
 #include <QNetworkAccessManager>
+#include <QXmlStreamReader>
+#include <QFile>
 
 
 class Logic : public QObject
@@ -19,6 +21,8 @@ public:
 private slots:
 
     void fileIsReady(QNetworkReply* reply);
+
+    void parseData(QString file);
 
 private:
     MainWindow w_;
