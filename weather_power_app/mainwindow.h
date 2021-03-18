@@ -23,7 +23,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
 
+    void sendDateInformation(QDate startDate, QDate EndDate);
 
 private slots:
 
@@ -39,7 +41,6 @@ private:
     QDate startDate;
     QDate endDate;
     int howLong;
-
 
 
 };

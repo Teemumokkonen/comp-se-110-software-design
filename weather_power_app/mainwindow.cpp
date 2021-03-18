@@ -24,4 +24,5 @@ void MainWindow::getDate()
    ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " to "
                            + endDate.toString("dd.MM.yyyy"));
 
+   emit sendDateInformation(startDate, endDate);
 }
