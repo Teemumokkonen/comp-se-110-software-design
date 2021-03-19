@@ -25,4 +25,5 @@ void MainWindow::getDate()
                            + endDate.toString("dd.MM.yyyy"));
 
    emit sendDateInformation(startDate, endDate);
+
 }

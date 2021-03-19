@@ -11,7 +11,6 @@ void Logic::init(){
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
-
     manager_.get(QNetworkRequest(QUrl("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man")));
 
 }
@@ -42,38 +41,45 @@ void Logic::parseData(QString file)
 
     while(!xmlReader->atEnd() && !xmlReader->hasError()) {
             // Read next element
-            QXmlStreamReader::TokenType token = xmlReader->readNext();
-
-
-            //If token is StartElement - read it
-            if(token == QXmlStreamReader::StartElement) {
-                if(xmlReader->name() == "Time") {
-                    qDebug() << xmlReader->readElementText();
+        QXmlStreamReader::TokenType token = xmlReader->readNext();
+        //qDebug() << xmlReader->name();
+        //qDebug() <<token;
+        //qDebug() <<xmlReader->text();
+        //If token is StartElement - read it
+        if(token == QXmlStreamReader::StartElement) {
+            if(xmlReader->name() == "BsWfsElement") {
+                    while(true) {
+                        xmlReader->readNext();
+                        if(xmlReader->name() == "Time") {
+                            qDebug() << xmlReader->readElementText();
+                        }
+                        if(xmlReader->name() == "ParameterName") {
+                            qDebug() << xmlReader->readElementText();
+                        }
+                        if (xmlReader->name() == "ParameterValue") {
+                            qDebug() << xmlReader->readElementText() + "\n";
+                            break;
+                        }
                 }
-
-                if(xmlReader->name() == "ParameterName") {
-                    qDebug() << xmlReader->readElementText();
+            }
+            else if(xmlReader->name() == "event") {
+                while(true) {
+                    xmlReader->readNext();
+                    if(xmlReader->name() == "value") {
+                        qDebug() << xmlReader->readElementText();
+                    }
+                    if(xmlReader->name() == "start_time") {
+                        qDebug() << xmlReader->readElementText();
+                    }
+                    if (xmlReader->name() == "end_time") {
+                        qDebug() << xmlReader->readElementText() + "\n";
+                        break;
+                    }
                 }
-
-                if(xmlReader->name() == "ParameterValue") {
-                    qDebug() << xmlReader->readElementText();
-                }
-                if(xmlReader->name() == "value") {
-                    qDebug() << xmlReader->readElementText();
-                }
-                if(xmlReader->name() == "start_time") {
-                    qDebug() << xmlReader->readElementText();
-                }
-                if(xmlReader->name() == "end_time") {
-                    qDebug() << xmlReader->readElementText();
-                }
-
-                }
+            }
+        }
     }
 }
-
-
-
 
 void Logic::getDataTimes(QDate start, QDate end)
 {
@@ -85,6 +91,5 @@ void Logic::getDataTimes(QDate start, QDate end)
     QNetworkRequest request(url);
     request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
     manager_.get(request);
-
 
 }
