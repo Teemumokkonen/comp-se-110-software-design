@@ -2,6 +2,8 @@
 #define LOGIC_H
 
 #include "mainwindow.h"
+#include "data.h"
+
 #include <QTemporaryFile>
 #include <QNetworkReply>
 #include <QFileDialog>
@@ -37,7 +39,7 @@ public slots:
 
     // takes signal from mainwindow when the date has been
     // set from the calendar
-    void getDataTimes(QDate startDate, QDate endDate);
+    void getDataTimes(QDate startDate, QDate endDate, int i);
 
 private slots:
 
@@ -52,6 +54,13 @@ private:
     // Ids for getting needed data from fingrid
     std::vector<int> ids = {ELECTRICITY_CONSUMPTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION,
                            ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION, NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION};
+    Data* data_;
+    int variable_id;
+
+    // used to send data to Data
+    double value;
+    int id;
+    std::string time;
 
 };
 #endif // LOGIC_H

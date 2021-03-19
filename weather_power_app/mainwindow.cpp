@@ -24,6 +24,8 @@ void MainWindow::getDate()
    ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " to "
                            + endDate.toString("dd.MM.yyyy"));
 
-   emit sendDateInformation(startDate, endDate);
+   // id for data that user has chosen. See logic.h for all working ids.
+   int variable_id = 193;
+   emit sendDateInformation(startDate, endDate, variable_id);
 
 }

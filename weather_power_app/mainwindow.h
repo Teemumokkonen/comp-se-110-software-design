@@ -25,7 +25,7 @@ public:
 
 signals:
 
-    void sendDateInformation(QDate startDate, QDate EndDate);
+    void sendDateInformation(QDate startDate, QDate EndDate, int id);
 
 private slots:
 
