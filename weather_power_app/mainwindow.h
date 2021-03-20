@@ -1,8 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "graph.h"
 
 #include <QMainWindow>
 #include <QCalendarWidget>
+
 
 // ehkä hyödylliset includet:
 // Qlistwidget
@@ -18,6 +20,8 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    QTabWidget *tab;
 
 public:
     MainWindow(QWidget *parent = nullptr);
