@@ -15,13 +15,15 @@ SOURCES += \
     graph.cpp \
     logic.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    preference.cpp
 
 HEADERS += \
     data.h \
     graph.h \
     logic.h \
-    mainwindow.h
+    mainwindow.h \
+    preference.h
 
 FORMS += \
     mainwindow.ui

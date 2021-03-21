@@ -8,6 +8,8 @@ Logic::Logic()
 
 void Logic::init(){
 
+    preference_ = new Preference();
+    preference_->create_save_file();
     data_ = new Data();
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);

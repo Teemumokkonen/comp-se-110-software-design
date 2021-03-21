@@ -10,8 +10,10 @@
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
 #include <QFile>
+#include "preference.h"
 #include <string>
 #include <ctime>
+#include "preference.h"
 
 
 
@@ -22,7 +24,6 @@ const int ELECTRICITY_PRODUCTION = 192;
 const int WIND_POWER_PRODUCTION = 181;
 const int NUCLEAR_POWER_PRODUCTION = 188;
 const int HYDRO_POWER_PRODUCTION = 191;
-
 
 
 class Logic : public QObject
@@ -55,6 +56,7 @@ private:
     std::vector<int> ids = {ELECTRICITY_CONSUMPTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION,
                            ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION, NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION};
     Data* data_;
+    Preference* preference_;
     int variable_id;
 
     // used to send data to Data
