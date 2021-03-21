@@ -7,8 +7,19 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
+    QChartView *chartView;
+
+    //Luodaan graafi ja annetaan sille otsikko
+    chart_ = new QChart();
+    chart_->setTitle("Täs ois graafi");
+    chart_->createDefaultAxes(); //Skaalaa automaattisesti x - y akselin
+    //chart->legend()->hide(); //voidaan piilottaa piirrettyjen graafien tiedot
+
+    chartView = new QChartView(chart_);
+    ui->gridLayout->addWidget(chartView, 1, 0);
+    m_charts << chartView;
+
     connect(ui->calender, &QCalendarWidget::clicked, this, &MainWindow::getDate);
-    connect(ui->checkBox, &QCheckBox::clicked, this, &MainWindow::drawChart);
 }
 
 MainWindow::~MainWindow()
@@ -16,17 +27,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::drawChart()
+QChart *MainWindow::getChart() const
 {
-    Graph* graphWindow = new Graph();
-    graphWindow->addGraph();
-
-    //Yritetään lisätä uuteen tabiin
-    tab = new QTabWidget(this);
-    tab->addTab(graphWindow, "Graafi 1");
-    this->layout()->addWidget(tab);
-    this->setLayout(layout());
+    return chart_;
 }
+
 
 void MainWindow::getDate()
 {

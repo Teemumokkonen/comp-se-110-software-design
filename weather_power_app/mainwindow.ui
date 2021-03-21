@@ -76,16 +76,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QChartView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>441</width>
-      <height>521</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QCalendarWidget" name="calender">
     <property name="geometry">
      <rect>
@@ -100,19 +90,6 @@
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
-    </property>
-   </widget>
-   <widget class="QLabel" name="te">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>40</y>
-      <width>241</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tähän tulee kuvaajat joskus sitten, jos se toimii :D</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -188,12 +165,12 @@
      <rect>
       <x>40</x>
       <y>560</y>
-      <width>83</width>
+      <width>111</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string>Piirrä kuvaaja</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_2">
@@ -258,6 +235,17 @@
      </rect>
     </property>
    </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>431</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout"/>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -265,7 +253,7 @@
      <x>0</x>
      <y>0</y>
      <width>939</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuperse">
@@ -278,13 +266,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QGraphicsView</extends>
-   <header>QtCharts</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

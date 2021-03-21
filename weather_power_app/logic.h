@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include "data.h"
+#include "preference.h"
 
 #include <QTemporaryFile>
 #include <QNetworkReply>
@@ -10,10 +11,8 @@
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
 #include <QFile>
-#include "preference.h"
 #include <string>
 #include <ctime>
-#include "preference.h"
 
 
 

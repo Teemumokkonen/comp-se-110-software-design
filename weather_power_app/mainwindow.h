@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "graph.h"
 
 #include <QMainWindow>
 #include <QCalendarWidget>
+#include <QtCharts>
 
 
 // ehkä hyödylliset includet:
@@ -26,10 +26,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void drawChart();
+    QChart * getChart() const;
 
 signals:
-
     void sendDateInformation(QDate startDate, QDate EndDate, int id);
 
 private slots:
@@ -39,6 +38,7 @@ private slots:
 
 private:
 
+    QChart* chart_;
     Ui::MainWindow* ui;
 
     //dates that user inputs to get the data.
@@ -46,6 +46,7 @@ private:
     QDate startDate;
     QDate endDate;
     int howLong;
+    QList<QChartView *> m_charts;
 
 
 };

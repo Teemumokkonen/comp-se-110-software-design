@@ -6,6 +6,7 @@
 #include <vector>
 #include <utility>
 #include <QDebug>
+#include <QtCharts>
 
 class Data
 {
@@ -17,7 +18,7 @@ public:
     void push_data(int id, double value, std::string timestamp);
 
     // for debugging push_data method
-    void show_data(int id);
+    void show_data(int id, QLineSeries *series);
 private:
 
     // fingrid data points => map(id) = vector{value, timestamp}

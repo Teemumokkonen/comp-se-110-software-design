@@ -12,7 +12,6 @@ CONFIG += c++11
 
 SOURCES += \
     data.cpp \
-    graph.cpp \
     logic.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,7 +19,6 @@ SOURCES += \
 
 HEADERS += \
     data.h \
-    graph.h \
     logic.h \
     mainwindow.h \
     preference.h

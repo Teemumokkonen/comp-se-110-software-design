@@ -93,7 +93,16 @@ void Logic::parseData(QString file)
             }
         }
     }
-    data_->show_data(193);
+    QSplineSeries* series  = new QSplineSeries;
+    QDateTimeAxis *axisX = new QDateTimeAxis;
+    axisX->setTickCount(10);
+    axisX->setFormat("MMM yyyy");
+    axisX->setTitleText("Date");
+    w_.getChart()->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    series->setName("SERIES 1");
+    data_->show_data(193,series);
+    w_.getChart()->addSeries(series);
 }
 
 void Logic::getDataTimes(QDate start, QDate end, int i)
