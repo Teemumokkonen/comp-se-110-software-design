@@ -1,8 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "graph.h"
 
 #include <QMainWindow>
 #include <QCalendarWidget>
+
 
 // ehkä hyödylliset includet:
 // Qlistwidget
@@ -19,11 +21,15 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    QTabWidget *tab;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
 
+    void sendDateInformation(QDate startDate, QDate EndDate, int id);
 
 private slots:
 
@@ -39,7 +45,6 @@ private:
     QDate startDate;
     QDate endDate;
     int howLong;
-
 
 
 };
