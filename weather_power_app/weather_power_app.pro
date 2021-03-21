@@ -13,11 +13,13 @@ CONFIG += c++11
 SOURCES += \
     logic.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    preference.cpp
 
 HEADERS += \
     logic.h \
-    mainwindow.h
+    mainwindow.h \
+    preference.h
 
 FORMS += \
     mainwindow.ui

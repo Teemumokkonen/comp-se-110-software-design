@@ -7,6 +7,7 @@
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
 #include <QFile>
+#include "preference.h"
 
 
 class Logic : public QObject

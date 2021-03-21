@@ -7,7 +7,6 @@ Logic::Logic()
 void Logic::init(){
 
     w_.show();
-
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
     manager_.get(QNetworkRequest(QUrl("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man")));
 }
