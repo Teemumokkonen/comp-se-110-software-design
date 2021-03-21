@@ -4,7 +4,6 @@ using namespace QtCharts;
 
 
 Graph::Graph(){
-    addGraph();
 }
 
 Graph::~Graph(){
