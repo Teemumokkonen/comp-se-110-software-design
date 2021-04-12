@@ -43,7 +43,7 @@ public:
     QChart * getChart() const;
 
 signals:
-    void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id);
+    void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id, QString place);
 
 private slots:
 

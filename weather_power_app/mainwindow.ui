@@ -138,10 +138,10 @@
      <item>
       <widget class="QSpinBox" name="howManyDays">
        <property name="minimum">
-        <number>1</number>
+        <number>-180</number>
        </property>
        <property name="maximum">
-        <number>99</number>
+        <number>180</number>
        </property>
       </widget>
      </item>
@@ -386,7 +386,17 @@
     </item>
     <item>
      <property name="text">
+      <string>Jyväskylä</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>Pirkkala</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Isokyrö</string>
      </property>
     </item>
    </widget>

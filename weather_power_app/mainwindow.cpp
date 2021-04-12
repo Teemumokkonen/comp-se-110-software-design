@@ -44,6 +44,8 @@ void MainWindow::getDate()
     ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " to "
                            + endDate.toString("dd.MM.yyyy"));
 
+    QString place = ui->comboBox->currentText();
+
     for(int i = 0; i < 7; i++) {
         QListWidgetItem* checkers = ui->listWidget->item(i);
         if(checkers->checkState() == Qt::Checked) {
@@ -58,6 +60,6 @@ void MainWindow::getDate()
     }
 
     // id for data that user has chosen. See logic.h for all working ids.
-    emit sendDateInformation(startDate, endDate, variable_id);
+    emit sendDateInformation(startDate, endDate, variable_id, place);
 
 }

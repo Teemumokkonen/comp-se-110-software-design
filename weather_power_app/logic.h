@@ -29,7 +29,7 @@ public slots:
 
     // takes signal from mainwindow when the date has been
     // set from the calendar
-    void getDataTimes(QDate startDate, QDate endDate, std::vector<int> i);
+    void getDataTimes(QDate startDate, QDate endDate, std::vector<int> i, QString place);
 
 private slots:
 
