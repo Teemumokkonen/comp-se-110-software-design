@@ -202,15 +202,15 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>455</x>
       <y>540</y>
-      <width>256</width>
+      <width>291</width>
       <height>192</height>
      </rect>
     </property>
     <item>
      <property name="text">
-      <string>Item</string>
+      <string>Electricity consumption in Finland</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -218,7 +218,47 @@
     </item>
     <item>
      <property name="text">
-      <string>New Item</string>
+      <string>Electricity production in Finland</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Wind power production forecast </string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Nuclear power production </string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Hydro power production </string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Electricity consumption forecast for the next 24 h</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>A tentative production prediction for the next 24 h</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -253,7 +293,7 @@
      <x>0</x>
      <y>0</y>
      <width>939</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuperse">

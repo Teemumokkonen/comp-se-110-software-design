@@ -39,13 +39,15 @@ public slots:
 
     // takes signal from mainwindow when the date has been
     // set from the calendar
-    void getDataTimes(QDate startDate, QDate endDate, int i);
+    void getDataTimes(QDate startDate, QDate endDate, std::vector<int> i);
 
 private slots:
 
     void fileIsReady(QNetworkReply* reply);
 
     void parseData(QString file);
+
+    void draw_graph();
 
 
 private:
@@ -57,7 +59,7 @@ private:
     Data* data_;
     Preference* preference_;
     int variable_id;
-
+    std::vector<int> temp_id;
     // used to send data to Data
     double value;
     int id;

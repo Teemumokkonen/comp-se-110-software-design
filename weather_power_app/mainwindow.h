@@ -29,7 +29,7 @@ public:
     QChart * getChart() const;
 
 signals:
-    void sendDateInformation(QDate startDate, QDate EndDate, int id);
+    void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id);
 
 private slots:
 
@@ -47,7 +47,8 @@ private:
     QDate endDate;
     int howLong;
     QList<QChartView *> m_charts;
-
+    std::vector<int> id_list = {193, 192, 181, 188, 191, 166, 241};
+    std::vector<int> variable_id;
 
 };
 #endif // MAINWINDOW_H
