@@ -57,7 +57,7 @@ void Logic::parseData(QString file)
                             time = xmlReader->readElementText().toStdString();
                         }
                         if(xmlReader->name() == "ParameterName") {
-                            qDebug() << xmlReader->readElementText();
+                            //qDebug() << xmlReader->readElementText();
                         }
                         if (xmlReader->name() == "ParameterValue") {
                             value = xmlReader->readElementText().toDouble();
