@@ -19,6 +19,8 @@ public:
 
     // for debugging push_data method
     void show_data(int id, QLineSeries *series);
+
+    void clear_data();
 private:
 
     // fingrid data points => map(id) = vector{value, timestamp}

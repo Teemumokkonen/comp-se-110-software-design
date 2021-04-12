@@ -55,18 +55,19 @@ void Logic::parseData(QString file)
                     while(true) {
                         xmlReader->readNext();
                         if(xmlReader->name() == "Time") {
-                            qDebug() << xmlReader->readElementText();
+                            time = xmlReader->readElementText().toStdString();
                         }
                         if(xmlReader->name() == "ParameterName") {
                             qDebug() << xmlReader->readElementText();
                         }
                         if (xmlReader->name() == "ParameterValue") {
-                            qDebug() << xmlReader->readElementText() + "\n";
+                            value = xmlReader->readElementText().toDouble();
                             break;
                         }
                 }
                     // \n is here now for debugging purposes.
                     // adding to datastructure here
+            data_->push_data(temp_id.at(variable_id), value, time);
             }
 
             else if(xmlReader->name() == "event") {
@@ -113,19 +114,46 @@ void Logic::draw_graph()
 
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list)
 {
-
+    data_->clear_data();
     qDebug() << start.toString("yyyy-MM-ddTT00%3A00%3A00Z");
     qDebug() << end.toString("yyyy-MM-ddT00:00:00Z");
     temp_id = id_list;
-    // Qurl for the Fingrid api. needs to be modified so that that the correct data can be fetched.
     variable_id = 0;
+    // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {
-        QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
-                        "/events/xml?start_time=" + start.toString("yyyy-MM-ddT00%3A00%3A00Z")  + "&end_time=" + end.toString("yyyy-MM-ddT00%3A00%3A00Z"));
-        //https://api.fingrid.fi/v1/variable/241/events/xml?start_time=2021-01-01T22%3A00%3A00Z&end_time=2021-03-17T22%3A00%3A00Z
-        QNetworkRequest request(url);
-        request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
-        manager_.get(request);
+        auto it = std::find(electricity_id.begin(), electricity_id.end(), id_list.at(i));
+
+        if (it != electricity_id.end()){
+
+            if(id_list.at(i) == ELECTRICITY_FORECAST or id_list.at(i) == TENTATIVE_PRODUCTION_PREDICTION) {
+                // declaring argument of time()
+                QDateTime current =  current.currentDateTime();;
+                QDateTime next = current.addDays(1);
+                QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
+                                "/events/xml?start_time=" + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&end_time=" + next.toString("yyyy-MM-ddTHH:mm:ssZ"));
+                    QNetworkRequest request(url);
+                    request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                    manager_.get(request);
+            }
+            else {
+                QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
+                                "/events/xml?start_time=" + start.toString("yyyy-MM-ddT00%3A00%3A00Z")  + "&end_time=" + end.toString("yyyy-MM-ddT00%3A00%3A00Z"));
+                //https://api.fingrid.fi/v1/variable/241/events/xml?start_time=2021-01-01T22%3A00%3A00Z&end_time=2021-03-17T22%3A00%3A00Z
+                    QNetworkRequest request(url);
+                    request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                    manager_.get(request);
+            }
+        }
+
+
+        else {
+            //"http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man"
+            QUrl url = QUrl("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man");
+                QNetworkRequest request(url);
+                request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                manager_.get(request);
+        }
+
 
     }
 }

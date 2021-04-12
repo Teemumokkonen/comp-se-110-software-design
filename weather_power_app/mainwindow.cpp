@@ -36,6 +36,7 @@ QChart *MainWindow::getChart() const
 
 void MainWindow::getDate()
 {
+    chart_->removeAllSeries();
     variable_id.clear();
     startDate = ui->calender->selectedDate();
     howLong = ui->howManyDays->value();
@@ -47,6 +48,12 @@ void MainWindow::getDate()
         QListWidgetItem* checkers = ui->listWidget->item(i);
         if(checkers->checkState() == Qt::Checked) {
             variable_id.push_back(id_list.at(i));
+        }
+    }
+    for(int i = 0; i < 5; i++) {
+        QListWidgetItem* checkers = ui->listWidget_2->item(i);
+        if(checkers->checkState() == Qt::Checked) {
+            variable_id.push_back(weather_id.at(i));
         }
     }
 

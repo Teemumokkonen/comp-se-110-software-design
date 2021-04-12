@@ -12,17 +12,8 @@
 #include <QXmlStreamReader>
 #include <QFile>
 #include <string>
+#include <algorithm>
 #include <ctime>
-
-
-
-const int ELECTRICITY_CONSUMPTION = 193;
-const int ELECTRICITY_FORECAST = 166;
-const int TENTATIVE_PRODUCTION_PREDICTION = 241;
-const int ELECTRICITY_PRODUCTION = 192;
-const int WIND_POWER_PRODUCTION = 181;
-const int NUCLEAR_POWER_PRODUCTION = 188;
-const int HYDRO_POWER_PRODUCTION = 191;
 
 
 class Logic : public QObject
@@ -54,12 +45,14 @@ private:
     MainWindow w_;
     QNetworkAccessManager manager_;
     // Ids for getting needed data from fingrid
-    std::vector<int> ids = {ELECTRICITY_CONSUMPTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION,
-                           ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION, NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION};
     Data* data_;
     Preference* preference_;
     int variable_id;
     std::vector<int> temp_id;
+    std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
+                           NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
+
+    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE};
     // used to send data to Data
     double value;
     int id;

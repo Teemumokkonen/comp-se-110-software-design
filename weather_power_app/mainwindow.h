@@ -11,7 +11,18 @@
 // QDialog
 // Qsignalmapper (voi olla eri nimi)
 
-
+const int ELECTRICITY_CONSUMPTION = 193;
+const int ELECTRICITY_FORECAST = 166;
+const int TENTATIVE_PRODUCTION_PREDICTION = 241;
+const int ELECTRICITY_PRODUCTION = 192;
+const int WIND_POWER_PRODUCTION = 181;
+const int NUCLEAR_POWER_PRODUCTION = 188;
+const int HYDRO_POWER_PRODUCTION = 191;
+const int TEMPERATURE_ID = 1;
+const int OBSERVED_WIND = 2;
+const int OBSERVED_CLOUDINESS = 3;
+const int PREDICTED_WIND = 4;
+const int PREDICTED_TEMPERATURE = 5;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -46,8 +57,11 @@ private:
     QDate startDate;
     QDate endDate;
     int howLong;
+    std::vector<int> id_list = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
+                           NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
+
+    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE};
     QList<QChartView *> m_charts;
-    std::vector<int> id_list = {193, 192, 181, 188, 191, 166, 241};
     std::vector<int> variable_id;
 
 };

@@ -36,3 +36,8 @@ void Data::show_data(int id, QLineSeries *series)
     }
     }
 }
+
+void Data::clear_data()
+{
+    data_points.clear();
+}
