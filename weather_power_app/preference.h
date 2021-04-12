@@ -1,23 +1,28 @@
 #ifndef PREFERENCE_H
 #define PREFERENCE_H
-#include <fstream>
-#include <iostream>
-#include <QDate>
-#include <string>
+#include <QFile>
+#include <QString>
+#include <map>
+#include <vector>
+#include <QTextStream>
 
 
-class Preference
+class Preference : public QObject
 {
-    // Pitäs tulla txt file buildiin, toivottavasti toimii, muuten olllaan kuses
+    Q_OBJECT
+
 public:
     Preference();
-    void create_save_file();
-    void new_preference_entry(int slot, std::string name, QDate start_date, QDate end_date);
+    ~Preference();
+    void read_preference_file();
+    void write_preference_file();
+    void new_preference_entry(int slot, std::vector<int> settings);
     void remove_preference_entry(int slot);
 
 private:
-    std::string file_name_ = "preferences.txt";
-    std::fstream file_;
+    QString file_name_ = "preferences.txt";
+    QFile file_;
+    std::map<int, std::vector<int>> entries_;
 };
 
 #endif // PREFERENCE_H
