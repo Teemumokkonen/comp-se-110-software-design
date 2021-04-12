@@ -15,6 +15,7 @@ void Logic::init(){
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
 
+
 }
 
 Logic::~Logic()

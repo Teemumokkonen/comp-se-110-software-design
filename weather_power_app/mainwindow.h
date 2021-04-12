@@ -50,6 +50,7 @@ private slots:
     // function to fetch the dates that user gives
     void getDate();
 
+    void saveGraph();
 private:
 
     QChart* chart_;

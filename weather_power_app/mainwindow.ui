@@ -371,6 +371,32 @@
      </sizepolicy>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>720</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Import chart</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="save_label">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>770</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -378,7 +404,7 @@
      <x>0</x>
      <y>0</y>
      <width>1329</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuperse">

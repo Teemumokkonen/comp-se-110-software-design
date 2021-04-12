@@ -34,8 +34,8 @@ void Data::show_data(int id, QLineSeries *series)
             auto str = QString::fromStdString(iter->second).insert(22,':');
             QDateTime datetime = QDateTime::fromString(str,Qt::ISODate);
             series->append(datetime.toMSecsSinceEpoch(),iter->first);
+            }
         }
-    }
     }
 }
 
