@@ -28,11 +28,13 @@ void Data::show_data(int id, QLineSeries *series)
 {
     if (data_points.size() != 0) {
     std::unordered_map<int, std::vector<std::pair<double, std::string>>>::const_iterator it = data_points.find(id);
-    for(auto iter = it->second.begin(); iter != it->second.end(); iter++)
-    {
-        auto str = QString::fromStdString(iter->second).insert(22,':');
-        QDateTime datetime = QDateTime::fromString(str,Qt::ISODate);
-        series->append(datetime.toMSecsSinceEpoch(),iter->first);
+    if(it != data_points.end()) {
+        for(auto iter = it->second.begin(); iter != it->second.end(); iter++)
+        {
+            auto str = QString::fromStdString(iter->second).insert(22,':');
+            QDateTime datetime = QDateTime::fromString(str,Qt::ISODate);
+            series->append(datetime.toMSecsSinceEpoch(),iter->first);
+        }
     }
     }
 }

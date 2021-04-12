@@ -138,7 +138,7 @@
      <item>
       <widget class="QSpinBox" name="howManyDays">
        <property name="minimum">
-        <number>-180</number>
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>180</number>
