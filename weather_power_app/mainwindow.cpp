@@ -50,7 +50,7 @@ void MainWindow::getDate()
             variable_id.push_back(id_list.at(i));
         }
     }
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 8; i++) {
         QListWidgetItem* checkers = ui->listWidget_2->item(i);
         if(checkers->checkState() == Qt::Checked) {
             variable_id.push_back(weather_id.at(i));

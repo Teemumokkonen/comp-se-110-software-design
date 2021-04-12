@@ -29,7 +29,7 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>520</x>
       <y>380</y>
       <width>251</width>
       <height>111</height>
@@ -39,16 +39,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Temperature now</string>
+          <string>Average Temperature</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Average Temperature</string>
+          <string>Temperature now</string>
          </property>
         </widget>
        </item>
@@ -109,7 +109,7 @@
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>350</y>
+      <y>340</y>
       <width>241</width>
       <height>41</height>
      </rect>
@@ -163,8 +163,8 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>540</y>
+      <x>290</x>
+      <y>550</y>
       <width>291</width>
       <height>191</height>
      </rect>
@@ -250,10 +250,10 @@
    <widget class="QListWidget" name="listWidget_2">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>540</y>
+      <x>20</x>
+      <y>590</y>
       <width>241</width>
-      <height>191</height>
+      <height>151</height>
      </rect>
     </property>
     <item>
@@ -296,16 +296,30 @@
       <enum>Unchecked</enum>
      </property>
     </item>
-   </widget>
-   <widget class="QListWidget" name="listWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>540</y>
-      <width>141</width>
-      <height>192</height>
-     </rect>
-    </property>
+    <item>
+     <property name="text">
+      <string>Average temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Mininum temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>max temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
    </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
@@ -323,8 +337,8 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>520</y>
+      <x>20</x>
+      <y>570</y>
       <width>191</width>
       <height>16</height>
      </rect>
@@ -336,7 +350,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>290</x>
       <y>520</y>
       <width>191</width>
       <height>16</height>
@@ -345,6 +359,36 @@
     <property name="text">
      <string>Select electricity data:</string>
     </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>540</y>
+      <width>72</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Tampere</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Helsinki</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Toijala</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Pirkkala</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
