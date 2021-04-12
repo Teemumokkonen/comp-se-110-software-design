@@ -23,6 +23,9 @@ const int OBSERVED_WIND = 2;
 const int OBSERVED_CLOUDINESS = 3;
 const int PREDICTED_WIND = 4;
 const int PREDICTED_TEMPERATURE = 5;
+const int AVERAGE_TEMP = 6;
+const int MAX_TEMP = 7;
+const int MIN_TEMP = 8;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,13 +43,14 @@ public:
     QChart * getChart() const;
 
 signals:
-    void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id);
+    void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id, QString place);
 
 private slots:
 
     // function to fetch the dates that user gives
     void getDate();
 
+    void saveGraph();
 private:
 
     QChart* chart_;
@@ -60,7 +64,7 @@ private:
     std::vector<int> id_list = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
                            NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
 
-    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE};
+    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE, AVERAGE_TEMP, MAX_TEMP, MIN_TEMP};
     QList<QChartView *> m_charts;
     std::vector<int> variable_id;
 

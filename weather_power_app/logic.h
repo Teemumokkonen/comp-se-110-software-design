@@ -4,7 +4,6 @@
 #include "mainwindow.h"
 #include "data.h"
 #include "preference.h"
-
 #include <QTemporaryFile>
 #include <QNetworkReply>
 #include <QFileDialog>
@@ -30,7 +29,7 @@ public slots:
 
     // takes signal from mainwindow when the date has been
     // set from the calendar
-    void getDataTimes(QDate startDate, QDate endDate, std::vector<int> i);
+    void getDataTimes(QDate startDate, QDate endDate, std::vector<int> i, QString place);
 
 private slots:
 
@@ -52,7 +51,9 @@ private:
     std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
                            NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
 
-    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE};
+
+    std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE, AVERAGE_TEMP, MAX_TEMP, MIN_TEMP};
+    std::vector<QString> callouts = {"temperature","windspeedms","TotalCloudCover","temperature","windspeedms", "TA_PT1H_AVG", "TA_PT1H_MAX", "TA_PT1H_MIN"};
     // used to send data to Data
     double value;
     int id;

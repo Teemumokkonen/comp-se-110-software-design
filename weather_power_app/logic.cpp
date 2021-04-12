@@ -14,7 +14,7 @@ void Logic::init(){
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
-    //manager_.get(QNetworkRequest(QUrl("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man")));
+
 
 }
 
@@ -58,7 +58,7 @@ void Logic::parseData(QString file)
                             time = xmlReader->readElementText().toStdString();
                         }
                         if(xmlReader->name() == "ParameterName") {
-                            qDebug() << xmlReader->readElementText();
+                            //qDebug() << xmlReader->readElementText();
                         }
                         if (xmlReader->name() == "ParameterValue") {
                             value = xmlReader->readElementText().toDouble();
@@ -112,7 +112,7 @@ void Logic::draw_graph()
     w_.getChart()->addSeries(series);
 }
 
-void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list)
+void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
 {
     data_->clear_data();
     qDebug() << start.toString("yyyy-MM-ddTT00%3A00%3A00Z");
@@ -138,7 +138,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list)
             else {
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + start.toString("yyyy-MM-ddT00%3A00%3A00Z")  + "&end_time=" + end.toString("yyyy-MM-ddT00%3A00%3A00Z"));
-                //https://api.fingrid.fi/v1/variable/241/events/xml?start_time=2021-01-01T22%3A00%3A00Z&end_time=2021-03-17T22%3A00%3A00Z
+                    //https://api.fingrid.fi/v1/variable/241/events/xml?start_time=2021-01-01T22%3A00%3A00Z&end_time=2021-03-17T22%3A00%3A00Z
                     QNetworkRequest request(url);
                     request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                     manager_.get(request);
@@ -147,13 +147,37 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list)
 
 
         else {
-            //"http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man"
-            QUrl url = QUrl("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man");
+            //model for getting temp data averages, min and max from certain period of time.
+            if (id_list.at(i) <= 8 and id_list.at(i) >= 6) {
+                //"http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man"
+                auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
+                int index = std::distance(weather_id.begin(), it);
+                QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::hourly::simple&place=" + place + "&starttime="
+                                 + start.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
+            }
+            else if(id_list.at(i) <= 3 and id_list.at(i) >= 1) {
+                auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
+                int index = std::distance(weather_id.begin(), it);
+                QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=" + place + "&starttime="
+                                 + start.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
+                QNetworkRequest request(url);
+                request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                manager_.get(request);
+            }
+            else {
+                QDateTime current =  current.currentDateTime();;
+                QDateTime next = current.addDays(1);
+                auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
+                int index = std::distance(weather_id.begin(), it);
+                QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=" + place + "&starttime="
+                                 + current.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + next.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
+                QNetworkRequest request(url);
+                request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                manager_.get(request);
+            }
         }
-
-
     }
 }

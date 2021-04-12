@@ -1,6 +1,7 @@
 QT += core gui charts
 QT += network
 QT += xml
+QT += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

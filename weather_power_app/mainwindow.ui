@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>939</width>
-    <height>789</height>
+    <width>1329</width>
+    <height>846</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,26 +29,26 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>380</y>
-      <width>251</width>
-      <height>111</height>
+      <x>1030</x>
+      <y>580</y>
+      <width>203</width>
+      <height>66</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Temperature now</string>
+          <string>Average Temperature</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Average Temperature</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -67,49 +67,17 @@
         <widget class="QLCDNumber" name="lcdNumber"/>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_2"/>
-       </item>
-       <item>
         <widget class="QLCDNumber" name="lcdNumber_3"/>
        </item>
       </layout>
      </item>
     </layout>
    </widget>
-   <widget class="QCalendarWidget" name="calender">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>50</y>
-      <width>371</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>470</y>
-      <width>141</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>kuvaaja in english ;)</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="data_label">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>350</y>
+      <x>710</x>
+      <y>540</y>
       <width>241</width>
       <height>41</height>
      </rect>
@@ -121,10 +89,10 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>260</y>
-      <width>241</width>
-      <height>80</height>
+      <x>1030</x>
+      <y>650</y>
+      <width>161</width>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -141,32 +109,19 @@
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>99</number>
+        <number>180</number>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>20</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start date:</string>
-    </property>
-   </widget>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>540</y>
-      <width>291</width>
-      <height>191</height>
+      <x>230</x>
+      <y>590</y>
+      <width>371</width>
+      <height>181</height>
      </rect>
     </property>
     <item>
@@ -195,7 +150,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Nuclear power production </string>
+      <string>Nuclear power production</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -203,7 +158,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Hydro power production </string>
+      <string>Hydro power production</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -241,8 +196,8 @@
      <rect>
       <x>20</x>
       <y>40</y>
-      <width>471</width>
-      <height>451</height>
+      <width>1281</width>
+      <height>501</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout"/>
@@ -250,10 +205,10 @@
    <widget class="QListWidget" name="listWidget_2">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>540</y>
-      <width>241</width>
-      <height>191</height>
+      <x>10</x>
+      <y>590</y>
+      <width>211</width>
+      <height>181</height>
      </rect>
     </property>
     <item>
@@ -296,22 +251,36 @@
       <enum>Unchecked</enum>
      </property>
     </item>
-   </widget>
-   <widget class="QListWidget" name="listWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>540</y>
-      <width>141</width>
-      <height>192</height>
-     </rect>
-    </property>
+    <item>
+     <property name="text">
+      <string>Average temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Mininum temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>max temperature</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
    </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>520</y>
+      <x>1030</x>
+      <y>720</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -323,9 +292,9 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>520</y>
-      <width>191</width>
+      <x>20</x>
+      <y>570</y>
+      <width>181</width>
       <height>16</height>
      </rect>
     </property>
@@ -336,8 +305,8 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>520</y>
+      <x>220</x>
+      <y>570</y>
       <width>191</width>
       <height>16</height>
      </rect>
@@ -346,13 +315,95 @@
      <string>Select electricity data:</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>740</y>
+      <width>72</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Pirkkala</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tampere</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Helsinki</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Toijala</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Jyväskylä</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Isokyrö</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QCalendarWidget" name="calender">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>590</y>
+      <width>401</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>720</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Import chart</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="save_label">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>770</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>939</width>
+     <width>1329</width>
      <height>20</height>
     </rect>
    </property>

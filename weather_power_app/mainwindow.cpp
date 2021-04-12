@@ -20,7 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_charts << chartView;
 
     connect(ui->calender, &QCalendarWidget::clicked, this, &MainWindow::getDate);
-
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::saveGraph);
+    ui->save_label->setVisible(false);
+    ui->save_label->setText("Saved succesfully!");
 }
 
 MainWindow::~MainWindow()
@@ -44,13 +46,15 @@ void MainWindow::getDate()
     ui->data_label->setText(startDate.toString("dd.MM.yyyy") + " to "
                            + endDate.toString("dd.MM.yyyy"));
 
+    QString place = ui->comboBox->currentText();
+
     for(int i = 0; i < 7; i++) {
         QListWidgetItem* checkers = ui->listWidget->item(i);
         if(checkers->checkState() == Qt::Checked) {
             variable_id.push_back(id_list.at(i));
         }
     }
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 8; i++) {
         QListWidgetItem* checkers = ui->listWidget_2->item(i);
         if(checkers->checkState() == Qt::Checked) {
             variable_id.push_back(weather_id.at(i));
@@ -58,6 +62,23 @@ void MainWindow::getDate()
     }
 
     // id for data that user has chosen. See logic.h for all working ids.
-    emit sendDateInformation(startDate, endDate, variable_id);
+    emit sendDateInformation(startDate, endDate, variable_id, place);
+
+}
+
+void MainWindow::saveGraph()
+{
+
+    QPixmap p = m_charts.at(0)->grab();
+    QOpenGLWidget *glWidget  = m_charts.at(0)->findChild<QOpenGLWidget*>();
+    if(glWidget){
+        QPainter painter(&p);
+        QPoint d = glWidget->mapToGlobal(QPoint())-m_charts.at(0)->mapToGlobal(QPoint());
+        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+        painter.drawImage(d, glWidget->grabFramebuffer());
+        painter.end();
+    }
+    p.save("test.png", "PNG");
+    ui->save_label->setVisible(true);
 
 }
