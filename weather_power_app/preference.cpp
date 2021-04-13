@@ -53,3 +53,9 @@ void Preference::remove_preference_entry(int slot)
     entries_.erase(it);
     write_preference_file();
 }
+
+std::pair<int, std::vector<int>> Preference::get_entry(int slot)
+{
+    auto it = entries_.find(slot);
+    return std::pair<int, std::vector<int>>(it->first, it->second);
+}
