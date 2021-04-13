@@ -12,10 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     //Luodaan graafi ja annetaan sille otsikko
     chart_ = new QChart();
     chart_->setTitle("Täs ois graafi");
-    chart_->createDefaultAxes(); //Skaalaa automaattisesti x - y akselin
-    //chart->legend()->hide(); //voidaan piilottaa piirrettyjen graafien tiedot
+    //chart_->createDefaultAxes(); //Skaalaa automaattisesti x - y akselin
+    //chart_->legend()->hide(); //voidaan piilottaa piirrettyjen graafien tiedot
 
     chartView = new QChartView(chart_);
+    chartView->setRenderHints(QPainter::Antialiasing);
     ui->gridLayout->addWidget(chartView, 1, 0);
     m_charts << chartView;
 

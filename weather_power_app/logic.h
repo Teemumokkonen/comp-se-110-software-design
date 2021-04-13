@@ -47,17 +47,30 @@ private:
     Data* data_;
     Preference* preference_;
     int variable_id;
+
     std::vector<int> temp_id;
+
     std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
                            NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
 
-
     std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE, AVERAGE_TEMP, MAX_TEMP, MIN_TEMP};
-    std::vector<QString> callouts = {"temperature","windspeedms","TotalCloudCover","temperature","windspeedms", "TA_PT1H_AVG", "TA_PT1H_MAX", "TA_PT1H_MIN"};
+
+
+    std::vector<QString> electricity_labels = {"ELECTRICITY CONSUMPTION", "ELECTRICITY PRODUCTION", "WIND POWER PRODUCTION",
+                           "NUCLEAR POWER PRODUCTION", "HYDRO POWER PRODUCTION", "ELECTRICITY FORECAST", "TENTATIVE PRODUCTION PREDICTION"};
+
+
+    std::vector<QString> callouts = {"temperature","windspeedms","TotalCloudCover","windspeedms", "temperature", "TA_PT1H_AVG", "TA_PT1H_MAX", "TA_PT1H_MIN"};
+
+    std::vector<QString> labels = {"TEMPERATURE", "OBSERVED WIND", "OBSERVED CLOUDINESS", "PREDICTED WIND", "PREDICTED TEMPERATURE", "AVERAGE TEMP", "MAX TEMP", "MIN TEMP"};
+
+    std::vector<QString> units = {"°C","m/s","%","windspeedms", "°C", "°C", "°C", "°C"};
     // used to send data to Data
     double value;
     int id;
     std::string time;
-
+    QDateTimeAxis *axisX;
+    std::vector<QValueAxis *> axisY_list;
+    bool date_checker = false;
 };
 #endif // LOGIC_H

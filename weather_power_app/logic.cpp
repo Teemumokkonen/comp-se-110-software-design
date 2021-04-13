@@ -1,6 +1,6 @@
 #include "logic.h"
 
-std::string FINGRID_API_KEY = "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6";
+QString FINGRID_API_KEY = "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6";
 
 Logic::Logic()
 {
@@ -9,7 +9,7 @@ Logic::Logic()
 void Logic::init(){
 
     preference_ = new Preference();
-    preference_->create_save_file();
+    //preference_->create_save_file();
     data_ = new Data();
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
@@ -100,23 +100,67 @@ void Logic::parseData(QString file)
 
 void Logic::draw_graph()
 {
-    QSplineSeries* series  = new QSplineSeries;
-    QDateTimeAxis *axisX = new QDateTimeAxis;
-    axisX->setTickCount(10);
-    axisX->setFormat("MMM yyyy");
-    axisX->setTitleText("Date");
-    w_.getChart()->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
-    series->setName("SERIES 1");
+    //lineseries
+    QSplineSeries *series  = new QSplineSeries;
+    QValueAxis * axisY = new QValueAxis;
+
     data_->show_data(temp_id.at(variable_id), series);
     w_.getChart()->addSeries(series);
+
+    if(temp_id.at(variable_id) < 100) {
+        auto it = std::find(weather_id.begin(), weather_id.end(), temp_id.at(variable_id));
+        int index = std::distance(weather_id.begin(), it);
+        series->setName(labels.at(index));
+        axisY->setLabelFormat("%i");
+        axisY->setTitleText(labels.at(index) + " (" + units.at(index) + ")");
+        w_.getChart()->addAxis(axisY, Qt::AlignLeft);
+
+    }
+
+    else  {
+        auto it = std::find(electricity_id.begin(), electricity_id.end(), temp_id.at(variable_id));
+        int index = std::distance(electricity_id.begin(), it);
+        series->setName(electricity_labels.at(index));
+        axisY->setLabelFormat("%i");
+        axisY->setTitleText(electricity_labels.at(index) + " (MWh/h)");
+        w_.getChart()->addAxis(axisY, Qt::AlignLeft);
+
+    }
+
+    series->attachAxis(axisY);
+    axisY_list.push_back(axisY);
+
+    if(date_checker == false) {
+        axisX = new QDateTimeAxis;
+        axisX->setTickCount(10);
+        axisX->setFormat("dd MM yyyy");
+        axisX->setTitleText("Date");
+        w_.getChart()->addAxis(axisX, Qt::AlignBottom);
+        series->attachAxis(axisX);
+        date_checker = true;
+    }
+
+
+
+
+    //w_.getChart()->createDefaultAxes();
 }
 
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
 {
+    if(axisX != nullptr) {
+        w_.getChart()->removeAxis(axisX);
+    }
+
+    for(auto element : axisY_list) {
+        if(element != nullptr) {
+            w_.getChart()->removeAxis(element);
+        }
+    }
+
+    date_checker = false;
+
     data_->clear_data();
-    qDebug() << start.toString("yyyy-MM-ddTT00%3A00%3A00Z");
-    qDebug() << end.toString("yyyy-MM-ddT00:00:00Z");
     temp_id = id_list;
     variable_id = 0;
     // loop over selected ids.
@@ -168,15 +212,17 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 manager_.get(request);
             }
             else {
-                QDateTime current =  current.currentDateTime();;
+
+                QDateTime current =  current.currentDateTime();
                 QDateTime next = current.addDays(1);
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
                 QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=" + place + "&starttime="
-                                 + current.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + next.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
+                                 + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&endtime=" + next.toString("yyyy-MM-ddTHH:mm:ssZ") + "&parameters=" + callouts.at(index));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
+
             }
         }
     }
