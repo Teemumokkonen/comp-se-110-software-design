@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QCalendarWidget>
 #include <QtCharts>
+#include <QDir>
 
 
 // ehkä hyödylliset includet:
@@ -27,6 +28,8 @@ const int PREDICTED_TEMPERATURE = 5;
 const int AVERAGE_TEMP = 6;
 const int MAX_TEMP = 7;
 const int MIN_TEMP = 8;
+
+const QString README = "../weather_power_app/readme";
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -57,6 +60,8 @@ private slots:
     // changes the Qlistwidgets items checkbox status acording to which ones has been selected.
     void changeButtonStatus();
 
+    void showAboutInfo();
+
 private:
 
     QChart* chart_;
@@ -73,6 +78,8 @@ private:
     std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE, AVERAGE_TEMP, MAX_TEMP, MIN_TEMP};
     QList<QChartView *> m_charts;
     std::vector<int> variable_id;
+    QMenu *aboutMenu;
+    QAction *aboutUsAct;
 
 };
 #endif // MAINWINDOW_H

@@ -27,6 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->save_label->setVisible(false);
     ui->save_label->setText("Saved succesfully!");
 
+    aboutMenu = menuBar()->addMenu(tr("&About"));
+    aboutUsAct = new QAction(tr("&About this app"));
+    aboutMenu->addAction(aboutUsAct);
+    aboutUsAct->setStatusTip(tr("Popup window containing information about us"));
+    connect(aboutUsAct, &QAction::triggered, this, &MainWindow::showAboutInfo);
 
 }
 
@@ -128,6 +133,39 @@ void MainWindow::changeButtonStatus()
             }
         }
     }
+}
+
+void MainWindow::showAboutInfo()
+{
+    qDebug() << "ryys";
+    QString title = "About...";
+
+    QString text = "";
+    QFile inputFile(README);
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd())
+       {
+          QString line = in.readLine();
+          if(title == "Scores"){
+                QStringList splittedline =  line.split(";");
+                for (int i = 0; i < splittedline.size(); i++){
+                    text.append(splittedline.at(i) + " ");
+                }
+                text.append("\n");
+          }
+          else {
+                text.append(line + "\n");
+          }
+       }
+       inputFile.close();
+    }
+
+    QMessageBox msgBox;
+    msgBox.setText(text);
+    msgBox.setWindowTitle(title);
+    msgBox.exec();
 }
 
 
