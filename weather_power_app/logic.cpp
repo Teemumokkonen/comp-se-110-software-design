@@ -156,6 +156,8 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
     data_->clear_data();
     temp_id = id_list;
     variable_id = 0;
+
+
     // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {
         // find if id belongs to weather or electricity data.
@@ -186,16 +188,19 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
 
 
         else {
-            // if selected data is average, mininum or max temp
+            // if selected data is average, mininum or max temp for a month
             if ((id_list.at(i) <= 8 and id_list.at(i) >= 6)) {
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
+                int days = start.daysInMonth();
                 QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::hourly::simple&place=" + place + "&starttime="
-                                 + start.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
+                                 + start.toString("yyyy-MM-01T00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM") + "-"
+                "" + QString::number(days) + end.toString("T00:00:00Z") + "&parameters=" + callouts.at(index));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
             }
+
             // if selected data is measured temp, windspeed or cloud coverage
             else if(id_list.at(i) <= 3 and id_list.at(i) >= 1) {
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
