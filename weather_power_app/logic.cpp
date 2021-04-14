@@ -10,7 +10,7 @@ void Logic::init(){
 
     preference_ = new Preference();
 
-    // preference_->create_save_file();
+    //preference_->create_save_file();
     // preference_->create_save_file();
 
     data_ = new Data();
@@ -144,8 +144,6 @@ void Logic::draw_graph()
     }
 
 
-
-
     //w_.getChart()->createDefaultAxes();
 }
 
@@ -176,12 +174,14 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 // declaring argument of time()
                 QDateTime current =  current.currentDateTime();;
                 QDateTime next = current.addDays(1);
+                qDebug() << next.toString("yyyy-MM-ddTHH:mm:ssZ");
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&end_time=" + next.toString("yyyy-MM-ddTHH:mm:ssZ"));
-                    QNetworkRequest request(url);
-                    request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
-                    manager_.get(request);
+                QNetworkRequest request(url);
+                request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                manager_.get(request);
             }
+
             else {
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + start.toString("yyyy-MM-ddT00%3A00%3A00Z")  + "&end_time=" + end.toString("yyyy-MM-ddT00%3A00%3A00Z"));
@@ -217,11 +217,16 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
             else {
 
                 QDateTime current =  current.currentDateTime();
-                QDateTime next = current.addDays(1);
+                QDateTime next  = current.addDays(1);
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
-                QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=" + place + "&starttime="
-                                 + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&endtime=" + next.toString("yyyy-MM-ddTHH:mm:ssZ") + "&parameters=" + callouts.at(index));
+
+
+                QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::forecast::hirlam::surface::point::simple&&"
+                                "place=" + place + "&timestep=30&starttime="
+                                 + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&endtime="
+                                 + next.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&parameters=" + callouts.at(index));
+
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);

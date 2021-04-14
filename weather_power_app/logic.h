@@ -64,7 +64,7 @@ private:
 
     std::vector<QString> labels = {"TEMPERATURE", "OBSERVED WIND", "OBSERVED CLOUDINESS", "PREDICTED WIND", "PREDICTED TEMPERATURE", "AVERAGE TEMP", "MAX TEMP", "MIN TEMP"};
 
-    std::vector<QString> units = {"°C","m/s","%","windspeedms", "°C", "°C", "°C", "°C"};
+    std::vector<QString> units = {"°C","m/s","%","m/s", "°C", "°C", "°C", "°C"};
     // used to send data to Data
     double value;
     int id;

@@ -26,6 +26,7 @@ void Data::push_data(int id, double value, std::string timestamp)
 
 void Data::show_data(int id, QLineSeries *series)
 {
+
     if (data_points.size() != 0) {
     std::unordered_map<int, std::vector<std::pair<double, std::string>>>::const_iterator it = data_points.find(id);
     if(it != data_points.end()) {
