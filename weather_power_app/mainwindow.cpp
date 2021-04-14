@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->save_label->setVisible(false);
     ui->save_label->setText("Saved succesfully!");
 
+
 }
 
 MainWindow::~MainWindow()

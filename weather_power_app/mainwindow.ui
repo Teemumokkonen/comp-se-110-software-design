@@ -131,6 +131,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -138,6 +141,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
@@ -147,6 +153,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -154,6 +163,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
@@ -163,6 +175,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -171,6 +186,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -178,6 +196,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
    </widget>
@@ -218,6 +239,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -225,6 +249,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
@@ -234,6 +261,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -241,6 +271,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
@@ -250,6 +283,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -257,6 +293,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
@@ -266,6 +305,9 @@
      <property name="checkState">
       <enum>Unchecked</enum>
      </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
@@ -273,6 +315,9 @@
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
    </widget>

@@ -148,6 +148,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
             w_.getChart()->removeAxis(element);
         }
     }
+    axisY_list.clear();
 
     date_checker = false;
 
