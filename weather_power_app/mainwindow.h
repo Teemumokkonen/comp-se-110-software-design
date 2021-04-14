@@ -52,6 +52,9 @@ private slots:
     void getDate();
 
     void saveGraph();
+
+    void changeButtonStatus();
+
 private:
 
     QChart* chart_;

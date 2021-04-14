@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->save_label->setVisible(false);
     ui->save_label->setText("Saved succesfully!");
 
-
+    connect(ui->listWidget, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
+    connect(ui->listWidget_2, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
 }
 
 MainWindow::~MainWindow()
@@ -85,3 +86,43 @@ void MainWindow::saveGraph()
     ui->save_label->setVisible(true);
 
 }
+
+void MainWindow::changeButtonStatus()
+{
+
+    if(ui->listWidget->item(5)->checkState() == Qt::Checked or ui->listWidget->item(6)->checkState() == Qt::Checked or
+       ui->listWidget_2->item(3)->checkState() == Qt::Checked or ui->listWidget_2->item(4)->checkState() == Qt::Checked) {
+        for(int j = 0; j < ui->listWidget->count(); j++) {
+            if(id_list.at(j) != TENTATIVE_PRODUCTION_PREDICTION and id_list.at(j) != ELECTRICITY_FORECAST) {
+                ui->listWidget->item(j)->setCheckState(Qt::Unchecked);
+                ui->listWidget->item(j)->setFlags(ui->listWidget->item(j)->flags() & ~Qt::ItemIsEnabled);
+            }
+        }
+        for(int j = 0; j < ui->listWidget_2->count(); j++) {
+            if(weather_id.at(j) != PREDICTED_TEMPERATURE and weather_id.at(j) != PREDICTED_WIND) {
+                ui->listWidget_2->item(j)->setCheckState(Qt::Unchecked);
+                ui->listWidget_2->item(j)->setFlags(ui->listWidget_2->item(j)->flags() & ~Qt::ItemIsEnabled);
+            }
+        }
+
+    }
+
+
+
+    else if(ui->listWidget->item(5)->checkState() != Qt::Checked and ui->listWidget->item(6)->checkState() != Qt::Checked
+            and ui->listWidget_2->item(3)->checkState() != Qt::Checked and ui->listWidget_2->item(4)->checkState() != Qt::Checked) {
+        for(int j = 0; j < ui->listWidget->count(); j++) {
+            if(id_list.at(j) != TENTATIVE_PRODUCTION_PREDICTION and id_list.at(j) != ELECTRICITY_FORECAST) {
+                ui->listWidget->item(j)->setFlags(ui->listWidget->item(j)->flags() | Qt::ItemIsEnabled);
+            }
+        }
+
+        for(int j = 0; j < ui->listWidget_2->count(); j++) {
+            if(weather_id.at(j) != PREDICTED_TEMPERATURE and weather_id.at(j) != PREDICTED_WIND) {
+                ui->listWidget_2->item(j)->setFlags(ui->listWidget_2->item(j)->flags() | Qt::ItemIsEnabled);
+            }
+        }
+    }
+}
+
+
