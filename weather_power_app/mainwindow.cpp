@@ -12,21 +12,21 @@ MainWindow::MainWindow(QWidget *parent)
     //Luodaan graafi ja annetaan sille otsikko
     chart_ = new QChart();
     chart_->setTitle("Täs ois graafi");
-    //chart_->createDefaultAxes(); //Skaalaa automaattisesti x - y akselin
-    //chart_->legend()->hide(); //voidaan piilottaa piirrettyjen graafien tiedot
-
     chartView = new QChartView(chart_);
     chartView->setRenderHints(QPainter::Antialiasing);
     ui->gridLayout->addWidget(chartView, 1, 0);
     m_charts << chartView;
 
+    // signals for mainwindow
     connect(ui->calender, &QCalendarWidget::clicked, this, &MainWindow::getDate);
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::saveGraph);
+    connect(ui->listWidget, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
+    connect(ui->listWidget_2, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
+
+    // fix this :D
     ui->save_label->setVisible(false);
     ui->save_label->setText("Saved succesfully!");
 
-    connect(ui->listWidget, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
-    connect(ui->listWidget_2, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
 }
 
 MainWindow::~MainWindow()
@@ -42,8 +42,11 @@ QChart *MainWindow::getChart() const
 
 void MainWindow::getDate()
 {
+    // clear old graph data so new can be added
     chart_->removeAllSeries();
     variable_id.clear();
+
+    // get date data from calender
     startDate = ui->calender->selectedDate();
     howLong = ui->howManyDays->value();
     endDate = startDate.addDays(howLong);
@@ -51,7 +54,7 @@ void MainWindow::getDate()
                            + endDate.toString("dd.MM.yyyy"));
 
     QString place = ui->comboBox->currentText();
-
+    // get selected data id from Qwidgetlists
     for(int i = 0; i < 7; i++) {
         QListWidgetItem* checkers = ui->listWidget->item(i);
         if(checkers->checkState() == Qt::Checked) {
@@ -72,7 +75,7 @@ void MainWindow::getDate()
 
 void MainWindow::saveGraph()
 {
-
+    // save graph to build folder
     QPixmap p = m_charts.at(0)->grab();
     QOpenGLWidget *glWidget  = m_charts.at(0)->findChild<QOpenGLWidget*>();
     if(glWidget){

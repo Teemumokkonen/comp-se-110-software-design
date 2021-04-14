@@ -51,8 +51,10 @@ private slots:
     // function to fetch the dates that user gives
     void getDate();
 
+    // saves graph to users local files.
     void saveGraph();
 
+    // changes the Qlistwidgets items checkbox status acording to which ones has been selected.
     void changeButtonStatus();
 
 private:

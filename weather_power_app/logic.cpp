@@ -9,15 +9,10 @@ Logic::Logic()
 void Logic::init(){
 
     preference_ = new Preference();
-
-    //preference_->create_save_file();
-    // preference_->create_save_file();
-
     data_ = new Data();
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
-
 
 }
 
@@ -25,7 +20,7 @@ Logic::~Logic()
 {
 }
 
-//after fetching data from api it will be written to temp file
+
 void Logic::fileIsReady(QNetworkReply* reply)
 {
 
@@ -40,20 +35,17 @@ void Logic::fileIsReady(QNetworkReply* reply)
 
 void Logic::parseData(QString file)
 {
-    qDebug() << temp_id.at(variable_id);
+
     QFile data(file);
     if (!data.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
     QXmlStreamReader* xmlReader = new QXmlStreamReader(&data);
-
+    // data is read from the temp file element by element
     while(!xmlReader->atEnd() && !xmlReader->hasError()) {
-            // Read next element
+        // Read next element
         QXmlStreamReader::TokenType token = xmlReader->readNext();
-        //qDebug() << xmlReader->name();
-        //qDebug() <<token;
-        //qDebug() <<xmlReader->text();
-        //If token is StartElement - read it
         if(token == QXmlStreamReader::StartElement) {
+            // here is checker if data is from fmi-api
             if(xmlReader->name() == "BsWfsElement") {
                     while(true) {
                         xmlReader->readNext();
@@ -66,34 +58,31 @@ void Logic::parseData(QString file)
                         if (xmlReader->name() == "ParameterValue") {
                             value = xmlReader->readElementText().toDouble();
                             break;
+
                         }
                 }
-                    // \n is here now for debugging purposes.
-                    // adding to datastructure here
+            // adding to datastructure here
             data_->push_data(temp_id.at(variable_id), value, time);
-            }
 
+            }
+            // here is checker if data is from fingrid-api
             else if(xmlReader->name() == "event") {
                 while(true) {
                     xmlReader->readNext();
                     if(xmlReader->name() == "value") {
-                        //qDebug() << xmlReader->readElementText();
                         value = xmlReader->readElementText().toDouble();
 
                     }
                     if(xmlReader->name() == "start_time") {
-                        //qDebug() << xmlReader->readElementText();
                         time = xmlReader->readElementText().toStdString();
                     }
                     if (xmlReader->name() == "end_time") {
-                        // \n is here now for debugging purposes.
-                        //qDebug() << xmlReader->readElementText() + "\n";
                         break;
                     }
 
                 }
-                // adding to datastructure here
-                data_->push_data(temp_id.at(variable_id), value, time);
+            // adding to datastructure here
+            data_->push_data(temp_id.at(variable_id), value, time);
             }
         }
     }
@@ -107,9 +96,11 @@ void Logic::draw_graph()
     QSplineSeries *series  = new QSplineSeries;
     QValueAxis * axisY = new QValueAxis;
 
+    // fetch data from data object and add it to chart.
     data_->show_data(temp_id.at(variable_id), series);
     w_.getChart()->addSeries(series);
 
+    // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
     if(temp_id.at(variable_id) < 100) {
         auto it = std::find(weather_id.begin(), weather_id.end(), temp_id.at(variable_id));
         int index = std::distance(weather_id.begin(), it);
@@ -117,7 +108,6 @@ void Logic::draw_graph()
         axisY->setLabelFormat("%i");
         axisY->setTitleText(labels.at(index) + " (" + units.at(index) + ")");
         w_.getChart()->addAxis(axisY, Qt::AlignLeft);
-
     }
 
     else  {
@@ -130,9 +120,11 @@ void Logic::draw_graph()
 
     }
 
+    // attach y-axis to certain series so that multiple lineseries can be dispayel at the same time
     series->attachAxis(axisY);
     axisY_list.push_back(axisY);
 
+    // set one x-axis for the graph
     if(date_checker == false) {
         axisX = new QDateTimeAxis;
         axisX->setTickCount(10);
@@ -142,13 +134,11 @@ void Logic::draw_graph()
         series->attachAxis(axisX);
         date_checker = true;
     }
-
-
-    //w_.getChart()->createDefaultAxes();
 }
 
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
 {
+    // check if graph has old axis and remove them if there are any.
     if(axisX != nullptr) {
         w_.getChart()->removeAxis(axisX);
     }
@@ -161,15 +151,16 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
 
     date_checker = false;
 
+    // clear the data object so that there can be added new data.
     data_->clear_data();
     temp_id = id_list;
     variable_id = 0;
     // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {
+        // find if id belongs to weather or electricity data.
         auto it = std::find(electricity_id.begin(), electricity_id.end(), id_list.at(i));
-
         if (it != electricity_id.end()){
-
+            // if selected data is forecast data.
             if(id_list.at(i) == ELECTRICITY_FORECAST or id_list.at(i) == TENTATIVE_PRODUCTION_PREDICTION) {
                 // declaring argument of time()
                 QDateTime current =  current.currentDateTime();;
@@ -181,7 +172,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
             }
-
+            // if selected data is normal electricity data.
             else {
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + start.toString("yyyy-MM-ddT00%3A00%3A00Z")  + "&end_time=" + end.toString("yyyy-MM-ddT00%3A00%3A00Z"));
@@ -194,9 +185,8 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
 
 
         else {
-            //model for getting temp data averages, min and max from certain period of time.
-            if (id_list.at(i) <= 8 and id_list.at(i) >= 6) {
-                //"http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man"
+            // if selected data is average, mininum or max temp
+            if ((id_list.at(i) <= 8 and id_list.at(i) >= 6)) {
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
                 QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::hourly::simple&place=" + place + "&starttime="
@@ -205,6 +195,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
             }
+            // if selected data is measured temp, windspeed or cloud coverage
             else if(id_list.at(i) <= 3 and id_list.at(i) >= 1) {
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
@@ -214,6 +205,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
             }
+            // if selected data is forecast.
             else {
 
                 QDateTime current =  current.currentDateTime();
@@ -230,7 +222,6 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 manager_.get(request);
-
             }
         }
     }
