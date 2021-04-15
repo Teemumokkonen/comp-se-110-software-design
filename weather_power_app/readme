@@ -6,6 +6,3 @@ For compiling the program TA has to compile the *.pro-file and run the main.cpp 
 
 Using the application itself is very straight forward but still very work-in-progress. NOTE: THIS IS A PROTOTYPE!
 
-User chooses a date or multiple.
-Chooses what data they want/need.
-Hits execute and the data is presented for the user.

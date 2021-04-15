@@ -1,0 +1,16 @@
+1. Introduction
+This app is a simple graph app which get data from fmi-api and fingrid api and makes graphs from the 
+fetched data. This program can fetch multiple data from the apis at a time, but it is recommended that user selects only two 
+data sets at a time. Otherwise the app will get quite slow and the graphs will be crowded. 
+
+
+2. How to use this app
+First user selects which data sets are wanted to be fetched.
+User selects second from which place data is wanted(standard is pirkkala).
+After data sets and place has been chosen the user selects the duration from which the data is wanted by selecting how many
+days is wanted to be proceeded from the date that will be chosen from the calender widget.
+
+(NOTE:some places may not have all data sets available to the them). 
+
+Some data sets will not be allowed to be called at the same time such as focecast data and observation data.
+

@@ -17,6 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->addWidget(chartView, 1, 0);
     m_charts << chartView;
 
+    // menubar items
+    makeMenuBar();
+    connect(aboutUsAct, &QAction::triggered, this, &MainWindow::showReadme);
+    connect(aboutApp, &QAction::triggered, this, &MainWindow::showAppInfo);
+
     // signals for mainwindow
     connect(ui->calender, &QCalendarWidget::clicked, this, &MainWindow::getDate);
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::saveGraph);
@@ -25,13 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // fix this :D
     ui->save_label->setVisible(false);
-    ui->save_label->setText("Saved succesfully!");
-
-    aboutMenu = menuBar()->addMenu(tr("&About"));
-    aboutUsAct = new QAction(tr("&About this app"));
-    aboutMenu->addAction(aboutUsAct);
-    aboutUsAct->setStatusTip(tr("Popup window containing information about us"));
-    connect(aboutUsAct, &QAction::triggered, this, &MainWindow::showAboutInfo);
 
 }
 
@@ -43,6 +41,17 @@ MainWindow::~MainWindow()
 QChart *MainWindow::getChart() const
 {
     return chart_;
+}
+
+void MainWindow::makeMenuBar()
+{
+    aboutMenu = menuBar()->addMenu(tr("&About"));
+    aboutUsAct = new QAction(tr("&readme"));
+    aboutApp = new QAction(tr("&About this app"));
+    aboutMenu->addAction(aboutUsAct);
+    aboutMenu->addAction(aboutApp);
+    aboutUsAct->setStatusTip(tr("readme that can be read from app"));
+    aboutApp->setStatusTip(tr("tips how to use this app for user"));
 }
 
 
@@ -81,19 +90,36 @@ void MainWindow::getDate()
 
 void MainWindow::saveGraph()
 {
-    // save graph to build folder
-    QPixmap p = m_charts.at(0)->grab();
-    QOpenGLWidget *glWidget  = m_charts.at(0)->findChild<QOpenGLWidget*>();
-    if(glWidget){
-        QPainter painter(&p);
-        QPoint d = glWidget->mapToGlobal(QPoint())-m_charts.at(0)->mapToGlobal(QPoint());
-        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
-        painter.drawImage(d, glWidget->grabFramebuffer());
-        painter.end();
+    bool ok;
+    QString fileName = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                         tr("File name:"), QLineEdit::Normal,
+                                         "dataGraph", &ok);
+    if(ok && !fileName.isEmpty()) {
+        OutputFolder = QFileDialog::getExistingDirectory(0, ("Select Folder where to save the file"), QDir::homePath());
     }
-    p.save("test.png", "PNG");
-    ui->save_label->setVisible(true);
 
+    if (!OutputFolder.isEmpty()) {
+        QPixmap p = m_charts.at(0)->grab();
+        QOpenGLWidget *glWidget  = m_charts.at(0)->findChild<QOpenGLWidget*>();
+        if(glWidget){
+            QPainter painter(&p);
+            QPoint d = glWidget->mapToGlobal(QPoint())-m_charts.at(0)->mapToGlobal(QPoint());
+            painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+            painter.drawImage(d, glWidget->grabFramebuffer());
+            painter.end();
+        }
+
+        p.save(OutputFolder + "/" + fileName + ".png", "PNG");
+        ui->save_label->setText("Saved succesfully!");
+        ui->save_label->setVisible(true);
+    }
+
+    if (ok && fileName.isEmpty()) {
+        QMessageBox::warning(this, "Warning", "File name can't be empty");
+        ui->save_label->setText("Something went wrong!");
+        ui->save_label->setVisible(true);
+
+    }
 }
 
 void MainWindow::changeButtonStatus()
@@ -135,13 +161,22 @@ void MainWindow::changeButtonStatus()
     }
 }
 
-void MainWindow::showAboutInfo()
+void MainWindow::showReadme()
 {
-    qDebug() << "ryys";
+    showAboutInfo(README);
+}
+
+void MainWindow::showAppInfo()
+{
+    showAboutInfo(APPINFO);
+}
+
+void MainWindow::showAboutInfo(QString file)
+{
     QString title = "About...";
 
     QString text = "";
-    QFile inputFile(README);
+    QFile inputFile(file);
     if (inputFile.open(QIODevice::ReadOnly))
     {
        QTextStream in(&inputFile);

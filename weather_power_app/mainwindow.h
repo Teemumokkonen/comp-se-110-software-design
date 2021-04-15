@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include <QCalendarWidget>
 #include <QtCharts>
+#include <QMessageBox>
+#include <QFileDialog>
 #include <QDir>
+
 
 
 // ehkä hyödylliset includet:
@@ -30,6 +33,7 @@ const int MAX_TEMP = 7;
 const int MIN_TEMP = 8;
 
 const QString README = "../weather_power_app/readme";
+const QString APPINFO = "../weather_power_app/aboutApp.txt";
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -51,6 +55,8 @@ signals:
 
 private slots:
 
+    void makeMenuBar();
+
     // function to fetch the dates that user gives
     void getDate();
 
@@ -60,7 +66,13 @@ private slots:
     // changes the Qlistwidgets items checkbox status acording to which ones has been selected.
     void changeButtonStatus();
 
-    void showAboutInfo();
+    void showReadme();
+
+    void showAppInfo();
+
+    void showAboutInfo(QString file);
+
+
 
 private:
 
@@ -80,6 +92,8 @@ private:
     std::vector<int> variable_id;
     QMenu *aboutMenu;
     QAction *aboutUsAct;
+    QAction *aboutApp;
+    QString OutputFolder;
 
 };
 #endif // MAINWINDOW_H
