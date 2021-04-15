@@ -128,7 +128,7 @@ void Logic::draw_graph()
     if(date_checker == false) {
         axisX = new QDateTimeAxis;
         axisX->setTickCount(10);
-        axisX->setFormat("dd MM yyyy");
+        axisX->setFormat("dd MM yyyy h:mm");
         axisX->setTitleText("Date");
         w_.getChart()->addAxis(axisX, Qt::AlignBottom);
         series->attachAxis(axisX);
