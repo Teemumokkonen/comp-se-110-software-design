@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 
 {
+
     ui->setupUi(this);
     QChartView *chartView;
 
@@ -95,7 +96,7 @@ void MainWindow::saveGraph()
                                          tr("File name:"), QLineEdit::Normal,
                                          "dataGraph", &ok);
     if(ok && !fileName.isEmpty()) {
-        OutputFolder = QFileDialog::getExistingDirectory(0, ("Select Folder where to save the file"), QDir::homePath());
+        OutputFolder = QFileDialog::getExistingDirectory(this, ("Select Folder where to save the file"), QDir::homePath());
     }
 
     if (!OutputFolder.isEmpty()) {
@@ -120,6 +121,7 @@ void MainWindow::saveGraph()
         ui->save_label->setVisible(true);
 
     }
+    QTimer::singleShot(5000, ui->save_label, &QLabel::hide);
 }
 
 void MainWindow::changeButtonStatus()
@@ -201,6 +203,7 @@ void MainWindow::showAboutInfo(QString file)
     msgBox.setText(text);
     msgBox.setWindowTitle(title);
     msgBox.exec();
+
 }
 
 

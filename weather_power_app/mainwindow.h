@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDir>
+#include <QTimer>
+
 
 
 
