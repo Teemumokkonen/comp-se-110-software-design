@@ -23,6 +23,7 @@ public:
     Logic();
     ~Logic();
     void init();
+    void chanceSeries();
 
 
 public slots:
@@ -43,6 +44,9 @@ private slots:
     // draws graph based on data that user has chosen.
     void draw_graph();
 
+    void prefButtonclicked(int slot, bool status, std::vector<int> boxes);
+
+    void saveButtonclicked(int slot, bool status, std::vector<int> boxes);
 
 private:
     MainWindow w_;
@@ -71,6 +75,7 @@ private:
     // list for all variable callouts for fmi api.
     std::vector<QString> callouts = {"temperature","windspeedms","TotalCloudCover","windspeedms", "temperature", "TA_PT1H_AVG", "TA_PT1H_MAX", "TA_PT1H_MIN"};
 
+    void setCheckBoxText();
 
     double value;
     int id;

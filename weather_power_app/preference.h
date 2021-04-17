@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <QTextStream>
+#include <QCoreApplication>
 
 
 class Preference : public QObject
@@ -18,11 +19,11 @@ public:
     void write_preference_file();
     void new_preference_entry(int slot, std::vector<int> settings);
     void remove_preference_entry(int slot);
-    std::pair<int, std::vector<int>> get_entry(int slot);
+    std::vector<int> get_entry(int slot);
 
 private:
-    QString file_name_ = "preferences.txt";
     QFile file_;
+    QString file_name_ = "preferences.txt";
     std::map<int, std::vector<int>> entries_;
 };
 

@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Luodaan graafi ja annetaan sille otsikko
     chart_ = new QChart();
-    chart_->setTitle("Täs ois graafi");
+    chart_->setTitle("Graph");
     chartView = new QChartView(chart_);
     chartView->setRenderHints(QPainter::Antialiasing);
     ui->gridLayout->addWidget(chartView, 1, 0);
@@ -28,8 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::saveGraph);
     connect(ui->listWidget, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
     connect(ui->listWidget_2, &QListWidget::itemClicked, this, &MainWindow::changeButtonStatus);
+    connect(ui->prefButton1, &QPushButton::clicked, this, &MainWindow::prefButton1clicked);
+    connect(ui->prefButton2, &QPushButton::clicked, this, &MainWindow::prefButton2clicked);
+    connect(ui->saveButton1, &QPushButton::clicked, this, &MainWindow::saveButton1clicked);
+    connect(ui->saveButton2, &QPushButton::clicked, this, &MainWindow::saveButton2clicked);
 
-    // fix this :D
     ui->save_label->setVisible(false);
 
 }
@@ -42,6 +45,57 @@ MainWindow::~MainWindow()
 QChart *MainWindow::getChart() const
 {
     return chart_;
+}
+
+void MainWindow::checkBoxText(int slot, QString text)
+{
+    if(slot == 1) {
+        ui->statusChange1->setText(text);
+
+    } else if(slot == 2) {
+        ui->statusChange2->setText(text);
+
+    } else if(slot == 3) {
+       ui->statusChange3->setText(text);
+
+    } else {
+       ui->statusChange4->setText(text);
+    }
+}
+
+std::vector<int> MainWindow::selectedBoxes()
+{
+    std::vector<int> temp_vector;
+    for(int i = 0; i < ui->listWidget->count(); i++) {
+        if(ui->listWidget->item(i)->checkState() == Qt::Checked) {
+            temp_vector.push_back(i);
+        }
+    }
+    for(int j = 0; j < ui->listWidget_2->count(); j++) {
+        if(ui->listWidget_2->item(j)->checkState() == Qt::Checked) {
+            temp_vector.push_back(j + 10);
+        }
+    }
+    return temp_vector;
+}
+
+void MainWindow::retrievePrefBoxes(std::vector<int> boxes)
+{
+    for(int i = 0; i < ui->listWidget->count(); i++) {
+        ui->listWidget->item(i)->setCheckState(Qt::Unchecked);
+    }
+    for(int i = 0; i < ui->listWidget_2->count(); i++) {
+        ui->listWidget_2->item(i)->setCheckState(Qt::Unchecked);
+    }
+    for(unsigned int i = 0; i < boxes.size(); i++) {
+        if(boxes.at(i) < 10) {
+            ui->listWidget->item(i)->setCheckState(Qt::Checked);
+
+        } else {
+            int j = boxes.at(i) - 10;
+            ui->listWidget_2->item(j)->setCheckState(Qt::Checked);
+        }
+    }
 }
 
 void MainWindow::makeMenuBar()
@@ -206,4 +260,46 @@ void MainWindow::showAboutInfo(QString file)
 
 }
 
+void MainWindow::prefButton1clicked()
+{
+    std::vector<int> temp_vector = selectedBoxes();
+    if(ui->statusChange1->checkState() != Qt::Checked ) {
+        emit sendPrefInfo(1, false, temp_vector);
+
+    } else {
+        emit sendPrefInfo(1, true, temp_vector);
+    }
+}
+void MainWindow::prefButton2clicked()
+{
+    std::vector<int> temp_vector = selectedBoxes();
+    if(ui->statusChange2->checkState() != Qt::Checked ) {
+        emit sendPrefInfo(2, false, temp_vector);
+
+    } else {
+        emit sendPrefInfo(2, true, temp_vector);
+    }
+}
+
+void MainWindow::saveButton1clicked()
+{
+    std::vector<int> temp_vector = selectedBoxes();
+    if(ui->statusChange3->checkState() != Qt::Checked ) {
+        emit sendSaveInfo(1, false, temp_vector);
+
+    } else {
+        emit sendSaveInfo(1, true, temp_vector);
+    }
+}
+
+void MainWindow::saveButton2clicked()
+{
+    std::vector<int> temp_vector = selectedBoxes();
+    if(ui->statusChange4->checkState() != Qt::Checked ) {
+        emit sendSaveInfo(2, false, temp_vector);
+
+    } else {
+        emit sendSaveInfo(2, true, temp_vector);
+    }
+}
 

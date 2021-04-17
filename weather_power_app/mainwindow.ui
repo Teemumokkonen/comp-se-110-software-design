@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1329</width>
+    <width>1550</width>
     <height>846</height>
    </rect>
   </property>
@@ -217,7 +217,7 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>1281</width>
+      <width>1501</width>
       <height>531</height>
      </rect>
     </property>
@@ -442,13 +442,138 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="prefButton1">
+    <property name="geometry">
+     <rect>
+      <x>1330</x>
+      <y>590</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Preference
+slot 1</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="statusChange1">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>590</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="prefButton2">
+    <property name="geometry">
+     <rect>
+      <x>1330</x>
+      <y>640</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Preference
+slot 2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton1">
+    <property name="geometry">
+     <rect>
+      <x>1330</x>
+      <y>690</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Saved data
+slot 1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton2">
+    <property name="geometry">
+     <rect>
+      <x>1330</x>
+      <y>740</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Saved data
+slot 2</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="statusChange2">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>640</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="statusChange3">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>690</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="statusChange4">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>740</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>1440</x>
+      <y>550</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Modify slots
+Empty/Has data </string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1329</width>
+     <width>1550</width>
      <height>20</height>
     </rect>
    </property>

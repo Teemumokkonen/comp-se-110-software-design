@@ -9,10 +9,18 @@ Logic::Logic()
 void Logic::init(){
 
     preference_ = new Preference();
+    preference_->read_preference_file();
     data_ = new Data();
     w_.show();
     connect(&w_, &MainWindow::sendDateInformation, this, &Logic::getDataTimes);
     connect(&manager_, &QNetworkAccessManager::finished, this, &Logic::fileIsReady);
+    connect(&w_, &MainWindow::sendPrefInfo, this, &Logic::prefButtonclicked);
+    connect(&w_, &MainWindow::sendSaveInfo, this, &Logic::saveButtonclicked);
+    setCheckBoxText();
+}
+
+void Logic::chanceSeries()
+{
 
 }
 
@@ -133,6 +141,54 @@ void Logic::draw_graph()
         w_.getChart()->addAxis(axisX, Qt::AlignBottom);
         series->attachAxis(axisX);
         date_checker = true;
+    }
+}
+
+void Logic::prefButtonclicked(int slot, bool status, std::vector<int> boxes)
+{
+    std::vector<int> ids = preference_->get_entry(slot);
+    if(status == false) {
+        w_.retrievePrefBoxes(ids);
+
+    } else {
+        if (!ids.empty()) {
+            preference_->remove_preference_entry(slot);
+            w_.checkBoxText(slot, "Empty");
+
+        } else {
+            preference_->new_preference_entry(slot, boxes);
+            w_.checkBoxText(slot, "Has Data");
+        }
+    }
+}
+
+void Logic::saveButtonclicked(int slot, bool status, std::vector<int> boxes)
+{
+    // Tarvii sen toisen vittusaatanan!!!
+    // tähän tulee kun klikataan save buttoneita
+}
+
+void Logic::setCheckBoxText()
+{
+    for(int i = 1; i < 5; i++) {
+        if(i == 1 || i == 2) {
+            if(preference_->get_entry(i).empty()) {
+                w_.checkBoxText(i, "Empty");
+
+            } else {
+                w_.checkBoxText(i, "Has Data");
+            }
+        } else {
+            int j = i - 2;
+            /*if(??(j).empty()) {
+                w_.checkBoxText(i, "Empty");
+
+            } else {
+                w_.checkBoxText(i, "Has Data");
+            }*/
+            // TULEE SAVET toisesta vittusaatanasta
+            // settaa savejen tekstit slotit 3 ja 4.
+        }
     }
 }
 

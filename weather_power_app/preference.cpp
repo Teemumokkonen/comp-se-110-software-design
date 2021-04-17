@@ -2,8 +2,6 @@
 
 Preference::Preference()
 {
-    QFile file_(file_name_);
-    read_preference_file();
 }
 
 Preference::~Preference()
@@ -12,13 +10,16 @@ Preference::~Preference()
 
 void Preference::read_preference_file()
 {
-    file_.open(QIODevice::ReadOnly | QIODevice::Text);
+    QFile file_(QCoreApplication::applicationDirPath() + file_name_);
+    if(!file_.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
     QTextStream in(&file_);
     while ( !in.atEnd() ) {
         QString line = in.readLine();
         QStringList list = line.split(',', Qt::SkipEmptyParts);
         std::vector<int> temp_vector;
-        for ( int i = 0; list.length() > i; i++ ) {
+        for ( int i = 0; list.size() > i; i++ ) {
             temp_vector.push_back(list.at(i).toInt());
         }
         int index = temp_vector.at(0);
@@ -30,14 +31,23 @@ void Preference::read_preference_file()
 
 void Preference::write_preference_file()
 {
-    file_.open(QIODevice::WriteOnly | QIODevice::Text);
-    for ( auto it = entries_.begin(); it != entries_.end(); it++ ) {
-        QString line = QString::number(it->first);
-        for ( unsigned int i = 0; it->second.size() > i; i++ ) {
-            line.push_back(',');
-            line.push_back(QString::number(it->second.at(i)));
-        }
+    QFile file_(QCoreApplication::applicationDirPath() + file_name_);
+    if(!file_.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        return;
     }
+    QTextStream out(&file_);
+    QString line = "";
+    QString tempLine;
+    for ( auto it = entries_.begin(); it != entries_.end(); it++ ) {
+        tempLine = QString::number(it->first);
+        for ( auto it2 = it->second.begin(); it2 != it->second.end(); it2++) {
+            tempLine.push_back(',');
+            tempLine.push_back(QString::number(*it2));
+        }
+        tempLine.push_back("\n");
+        line.push_back(tempLine);
+    }
+    out << line;
     file_.close();
 }
 
@@ -50,12 +60,17 @@ void Preference::new_preference_entry(int slot, std::vector<int> settings)
 void Preference::remove_preference_entry(int slot)
 {
     auto it = entries_.find(slot);
-    entries_.erase(it);
-    write_preference_file();
+    if(it != entries_.end()){
+        entries_.erase(it);
+        write_preference_file();
+    }
 }
 
-std::pair<int, std::vector<int>> Preference::get_entry(int slot)
+std::vector<int> Preference::get_entry(int slot)
 {
     auto it = entries_.find(slot);
-    return std::pair<int, std::vector<int>>(it->first, it->second);
+    if(it != entries_.end()){
+        return it->second;
+    }
+    return {};
 }
