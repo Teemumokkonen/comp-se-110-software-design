@@ -38,9 +38,11 @@ void Data::show_data(int id, QLineSeries *series)
 
                 if(id == 6 && datetime.time().hour() == 12){
                     AVG_temp.push_back(iter->first);
-                } else if (id == 7 && datetime.time().hour() == 12){
+                }
+                else if (id == 7 && datetime.time().hour() == 12){
                     AVG_max.push_back(iter->first);
-                } else if (id == 8 && datetime.time().hour() == 12) {
+                }
+                else if (id == 8 && datetime.time().hour() == 12) {
                     AVG_min.push_back(iter->first);
                 }
             }
