@@ -58,7 +58,7 @@ void Logic::parseData(QString file, int i)
                             time = xmlReader->readElementText().toStdString();
                         }
                         if(xmlReader->name() == "ParameterName") {
-                            //qDebug() << xmlReader->readElementText();
+
                         }
                         if (xmlReader->name() == "ParameterValue") {
                             value = xmlReader->readElementText().toDouble();
@@ -94,6 +94,8 @@ void Logic::parseData(QString file, int i)
     draw_graph(i);
 }
 
+
+
 void Logic::draw_graph(int i)
 {
     //lineseries
@@ -103,13 +105,16 @@ void Logic::draw_graph(int i)
     // fetch data from data object and add it to chart.
     data_->show_data(temp_id.at(i), series);
     w_.getChart()->addSeries(series);
+
+    //Formats the data
     temp_AVG = data_->get_AVG_temp();
     temp_AVGmin = data_->get_AVG_min();
     temp_AVGmax = data_->get_AVG_max();
-    qDebug() << "tässä";
-    for(std::vector<double>::iterator it_temp = temp_AVG.begin(); it_temp !=temp_AVG.end(); ++it_temp){
-        qDebug() << *it_temp;
-    }
+
+    Electricity = data_->get_Electricity();
+    Nuclear = data_->get_Nuclear();
+    Hydro = data_->get_Hydro();
+    Wind = data_->get_Wind();
 
     // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
     if(temp_id.at(i) < 100) {
@@ -175,6 +180,36 @@ void Logic::calculate_average_temp(double days, int id)
     }
 }
 
+
+void Logic::calculate_powerforms(int id)
+{
+    //Summs datapoints all electricity production
+    for(std::vector<double>::iterator it_temp = Electricity.begin(); it_temp !=Electricity.end(); ++it_temp){
+        all_elec += *it_temp;
+    }
+    std::vector<double> power;
+    if(id == WIND_POWER_PRODUCTION){
+        for(std::vector<double>::iterator it_temp = Wind.begin(); it_temp !=Wind.end(); ++it_temp){
+            all_wind += *it_temp;
+        }
+        qDebug()<<"Elec to wind (%)";
+        qDebug()<<all_wind/all_elec *100;
+
+    } else if(id == NUCLEAR_POWER_PRODUCTION){
+        for(std::vector<double>::iterator it_temp = Nuclear.begin(); it_temp !=Nuclear.end(); ++it_temp){
+            all_nuke += *it_temp;
+        }
+        qDebug()<<"Elec to nuke (%)";
+        qDebug()<<all_nuke/all_elec *100;
+    } else if(id == HYDRO_POWER_PRODUCTION) {
+        for(std::vector<double>::iterator it_temp = Hydro.begin(); it_temp !=Hydro.end(); ++it_temp){
+            all_hydro += *it_temp;
+
+        }
+        qDebug()<<"Elec to hydro (%)";
+        qDebug()<<all_hydro/all_elec *100;
+    }
+}
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
 {
     // check if graph has old axis and remove them if there are any.
@@ -198,20 +233,25 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
     all_temp = 0;
     all_min = 0;
     all_max = 0;
+    all_elec = 0;
+    all_nuke = 0;
+    all_wind = 0;
+    all_hydro = 0;
     temps.clear();
 
-    qDebug() << "uus runi";
+
     // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {
         // find if id belongs to weather or electricity data.
         auto it = std::find(electricity_id.begin(), electricity_id.end(), id_list.at(i));
         if (it != electricity_id.end()){
+            calculate_powerforms(id_list.at(i));
             // if selected data is forecast data.
             if(id_list.at(i) == ELECTRICITY_FORECAST or id_list.at(i) == TENTATIVE_PRODUCTION_PREDICTION) {
                 // declaring argument of time()
                 QDateTime current =  current.currentDateTime();;
                 QDateTime next = current.addDays(1);
-                //qDebug() << next.toString("yyyy-MM-ddTHH:mm:ssZ");
+
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&end_time=" + next.toString("yyyy-MM-ddTHH:mm:ssZ"));
                 QNetworkRequest request(url);
@@ -241,8 +281,6 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
                 int days = start.daysInMonth();
-                //qDebug() << start.toString("yyyy-MM-01T00:00:00Z");
-                //qDebug() << start.toString("yyyy-MM");
                 QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::hourly::simple&place=" + place + "&starttime="
                                  + start.toString("yyyy-MM-01T00:00:00Z")  + "&endtime=" + start.toString("yyyy-MM") + "-"
                 "" + QString::number(days) + start.toString("T23:59:00Z") + "&parameters=" + callouts.at(index));
@@ -269,7 +307,6 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
             }
             // if selected data is forecast.
             else {
-
                 QDateTime current =  current.currentDateTime();
                 QDateTime next  = current.addDays(1);
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
