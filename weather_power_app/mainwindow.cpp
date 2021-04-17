@@ -145,8 +145,6 @@ void MainWindow::changeButtonStatus()
     }
 
 
-
-
     else if(ui->listWidget->item(5)->checkState() != Qt::Checked and ui->listWidget->item(6)->checkState() != Qt::Checked
             and ui->listWidget_2->item(3)->checkState() != Qt::Checked and ui->listWidget_2->item(4)->checkState() != Qt::Checked) {
         for(int j = 0; j < ui->listWidget->count(); j++) {

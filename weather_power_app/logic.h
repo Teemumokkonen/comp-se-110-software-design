@@ -13,7 +13,8 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
-
+#include <map>
+#include <QSignalMapper>
 
 class Logic : public QObject
 {
@@ -38,10 +39,10 @@ private slots:
     void fileIsReady(QNetworkReply* reply);
 
     // parses data from temporary file and sends it to data object to saved locally.
-    void parseData(QString file);
+    void parseData(QString file, int i);
 
     // draws graph based on data that user has chosen.
-    void draw_graph();
+    void draw_graph(int i);
 
 
 private:
@@ -71,11 +72,13 @@ private:
     // list for all variable callouts for fmi api.
     std::vector<QString> callouts = {"temperature","windspeedms","TotalCloudCover","windspeedms", "temperature", "TA_PT1H_AVG", "TA_PT1H_MAX", "TA_PT1H_MIN"};
 
+    QSignalMapper *signalMapper;
 
     double value;
     int id;
-    int variable_id;
     std::string time;
     bool date_checker = false;
+    std::map<QUrl, int> requestList;
+
 };
 #endif // LOGIC_H

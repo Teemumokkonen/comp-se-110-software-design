@@ -8,6 +8,7 @@ Logic::Logic()
 
 void Logic::init(){
 
+    signalMapper = new QSignalMapper(this);
     preference_ = new Preference();
     data_ = new Data();
     w_.show();
@@ -24,16 +25,20 @@ Logic::~Logic()
 void Logic::fileIsReady(QNetworkReply* reply)
 {
 
-    QString name = "12hforecast.xml";
-    QFile data_file(name);
-    if (!data_file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-    data_file.write(reply->readAll());
-    data_file.close();
-    parseData(name);
+    QUrl req = reply->url();
+    auto it = requestList.find(req);
+    if(it != requestList.end()) {
+        QString name = "12hforecast.xml";
+        QFile data_file(name);
+        if (!data_file.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+        data_file.write(reply->readAll());
+        data_file.close();
+        parseData(name, it->second);
+    }
 }
 
-void Logic::parseData(QString file)
+void Logic::parseData(QString file, int i)
 {
 
     QFile data(file);
@@ -62,7 +67,7 @@ void Logic::parseData(QString file)
                         }
                 }
             // adding to datastructure here
-            data_->push_data(temp_id.at(variable_id), value, time);
+            data_->push_data(temp_id.at(i), value, time);
 
             }
             // here is checker if data is from fingrid-api
@@ -82,27 +87,26 @@ void Logic::parseData(QString file)
 
                 }
             // adding to datastructure here
-            data_->push_data(temp_id.at(variable_id), value, time);
+            data_->push_data(temp_id.at(i), value, time);
             }
         }
     }
-    draw_graph();
-    variable_id++;
+    draw_graph(i);
 }
 
-void Logic::draw_graph()
+void Logic::draw_graph(int i)
 {
     //lineseries
     QSplineSeries *series  = new QSplineSeries;
     QValueAxis * axisY = new QValueAxis;
 
     // fetch data from data object and add it to chart.
-    data_->show_data(temp_id.at(variable_id), series);
+    data_->show_data(temp_id.at(i), series);
     w_.getChart()->addSeries(series);
 
     // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
-    if(temp_id.at(variable_id) < 100) {
-        auto it = std::find(weather_id.begin(), weather_id.end(), temp_id.at(variable_id));
+    if(temp_id.at(i) < 100) {
+        auto it = std::find(weather_id.begin(), weather_id.end(), temp_id.at(i));
         int index = std::distance(weather_id.begin(), it);
         series->setName(labels.at(index));
         axisY->setLabelFormat("%i");
@@ -111,7 +115,7 @@ void Logic::draw_graph()
     }
 
     else  {
-        auto it = std::find(electricity_id.begin(), electricity_id.end(), temp_id.at(variable_id));
+        auto it = std::find(electricity_id.begin(), electricity_id.end(), temp_id.at(i));
         int index = std::distance(electricity_id.begin(), it);
         series->setName(electricity_labels.at(index));
         axisY->setLabelFormat("%i");
@@ -154,10 +158,10 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
 
     // clear the data object so that there can be added new data.
     data_->clear_data();
+    requestList.clear();
     temp_id = id_list;
-    variable_id = 0;
 
-
+    qDebug() << "uus runi";
     // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {
         // find if id belongs to weather or electricity data.
@@ -168,12 +172,15 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 // declaring argument of time()
                 QDateTime current =  current.currentDateTime();;
                 QDateTime next = current.addDays(1);
-                qDebug() << next.toString("yyyy-MM-ddTHH:mm:ssZ");
+                //qDebug() << next.toString("yyyy-MM-ddTHH:mm:ssZ");
                 QUrl url = QUrl("https://api.fingrid.fi/v1/variable/" + QVariant(id_list.at(i)).toString() +
                                 "/events/xml?start_time=" + current.toString("yyyy-MM-ddTHH:mm:ssZ")  + "&end_time=" + next.toString("yyyy-MM-ddTHH:mm:ssZ"));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                std::pair<QUrl, int> pair = std::make_pair(url, i);
+                requestList.insert(pair);
                 manager_.get(request);
+
             }
             // if selected data is normal electricity data.
             else {
@@ -182,10 +189,12 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                     //https://api.fingrid.fi/v1/variable/241/events/xml?start_time=2021-01-01T22%3A00%3A00Z&end_time=2021-03-17T22%3A00%3A00Z
                     QNetworkRequest request(url);
                     request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                    std::pair<QUrl, int> pair = std::make_pair(url, i);
+                    requestList.insert(pair);
                     manager_.get(request);
+
             }
         }
-
 
         else {
             // if selected data is average, mininum or max temp for a month
@@ -193,11 +202,15 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 auto it = std::find(weather_id.begin(), weather_id.end(), id_list.at(i));
                 int index = std::distance(weather_id.begin(), it);
                 int days = start.daysInMonth();
+                //qDebug() << start.toString("yyyy-MM-01T00:00:00Z");
+                //qDebug() << start.toString("yyyy-MM");
                 QUrl url = QUrl("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::hourly::simple&place=" + place + "&starttime="
-                                 + start.toString("yyyy-MM-01T00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM") + "-"
-                "" + QString::number(days) + end.toString("T00:00:00Z") + "&parameters=" + callouts.at(index));
+                                 + start.toString("yyyy-MM-01T00:00:00Z")  + "&endtime=" + start.toString("yyyy-MM") + "-"
+                "" + QString::number(days) + start.toString("T23:59:00Z") + "&parameters=" + callouts.at(index));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                std::pair<QUrl, int> pair = std::make_pair(url, i);
+                requestList.insert(pair);
                 manager_.get(request);
             }
 
@@ -209,7 +222,10 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                                  + start.toString("yyyy-MM-ddT00:00:00Z")  + "&endtime=" + end.toString("yyyy-MM-ddT00:00:00Z") + "&parameters=" + callouts.at(index));
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                std::pair<QUrl, int> pair = std::make_pair(url, i);
+                requestList.insert(pair);
                 manager_.get(request);
+
             }
             // if selected data is forecast.
             else {
@@ -227,6 +243,8 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
 
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
+                std::pair<QUrl, int> pair = std::make_pair(url, i);
+                requestList.insert(pair);
                 manager_.get(request);
             }
         }

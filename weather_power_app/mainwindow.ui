@@ -300,7 +300,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Mininum temperature for month</string>
+      <string>max temperature for month</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -311,7 +311,7 @@
     </item>
     <item>
      <property name="text">
-      <string>max temperature for month</string>
+      <string>Mininum temperature for month</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
