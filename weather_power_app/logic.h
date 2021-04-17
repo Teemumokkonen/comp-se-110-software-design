@@ -97,6 +97,8 @@ private:
     std::string time;
     bool date_checker = false;
     std::map<QUrl, int> requestList;
+    QUrl url;
+    std::pair<QUrl, int> pair;
 
 };
 #endif // LOGIC_H

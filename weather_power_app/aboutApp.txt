@@ -10,7 +10,10 @@ User selects second from which place data is wanted(standard is pirkkala).
 After data sets and place has been chosen the user selects the duration from which the data is wanted by selecting how many
 days is wanted to be proceeded from the date that will be chosen from the calender widget.
 
-(NOTE:some places may not have all data sets available to the them). 
+(NOTE 1: Weather data can only be for a period of 7 days max. This is due to fmi-api.)
+(NOTE 2: Some places may not have all data sets available to the them). 
+(NOTE 3: When trying to fetch large amount of data (e.g 100m days) it is recommended that only one 
+	 Data set is selected. Otherwise the program can be quite slow.)
 
 Some data sets will not be allowed to be called at the same time such as focecast data and observation data.
 
