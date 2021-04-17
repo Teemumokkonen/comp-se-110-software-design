@@ -44,6 +44,8 @@ private slots:
     // draws graph based on data that user has chosen.
     void draw_graph(int i);
 
+    void calculate_average_temp(double day, int id);
+
 
 private:
     MainWindow w_;
@@ -54,6 +56,13 @@ private:
     std::vector<QValueAxis *> axisY_list;
 
     std::vector<int> temp_id;
+    std::vector<double> temp_AVG;
+    std::vector<double> temp_AVGmin;
+    std::vector<double> temp_AVGmax;
+    std::vector<double> temps;
+    double all_min;
+    double all_max;
+    double all_temp;
 
     // Ids for getting needed data from fingrid
     std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,

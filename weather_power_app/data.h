@@ -21,10 +21,18 @@ public:
     void show_data(int id, QLineSeries *series);
 
     void clear_data();
+
+    std::vector<double> get_AVG_temp();
+    std::vector<double> get_AVG_max();
+    std::vector<double> get_AVG_min();
+
 private:
 
     // fingrid data points => map(id) = vector{value, timestamp}
     std::unordered_map<int, std::vector<std::pair<double, std::string>>>  data_points;
+    std::vector<double> AVG_temp;
+    std::vector<double> AVG_max;
+    std::vector<double> AVG_min;
 };
 
 #endif // DATA_H

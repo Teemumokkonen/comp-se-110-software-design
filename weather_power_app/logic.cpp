@@ -103,6 +103,13 @@ void Logic::draw_graph(int i)
     // fetch data from data object and add it to chart.
     data_->show_data(temp_id.at(i), series);
     w_.getChart()->addSeries(series);
+    temp_AVG = data_->get_AVG_temp();
+    temp_AVGmin = data_->get_AVG_min();
+    temp_AVGmax = data_->get_AVG_max();
+    qDebug() << "tässä";
+    for(std::vector<double>::iterator it_temp = temp_AVG.begin(); it_temp !=temp_AVG.end(); ++it_temp){
+        qDebug() << *it_temp;
+    }
 
     // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
     if(temp_id.at(i) < 100) {
@@ -140,6 +147,34 @@ void Logic::draw_graph(int i)
     }
 }
 
+void Logic::calculate_average_temp(double days, int id)
+{
+    if(id == 6){
+        for(std::vector<double>::iterator it_temp = temp_AVG.begin(); it_temp !=temp_AVG.end(); ++it_temp){
+            all_temp += *it_temp;
+        }
+        double average = all_temp/days;
+        temps.push_back(average);
+        w_.LcdAverage(average);
+    }
+    if(id == 7) {
+        for(std::vector<double>::iterator it_max = temp_AVGmax.begin(); it_max != temp_AVGmax.end(); ++it_max){
+            all_max += *it_max;
+        }
+        double average_max = all_max/days;
+        temps.push_back(average_max);
+        w_.LcdMax(average_max);
+    }
+    if(id == 8){
+        for(std::vector<double>::iterator it_min = temp_AVGmin.begin(); it_min != temp_AVGmin.end(); ++it_min){
+            all_min += *it_min;
+        }
+        double average_min = all_min/days;
+        temps.push_back(average_min);
+        w_.LcdMin(average_min);
+    }
+}
+
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
 {
     // check if graph has old axis and remove them if there are any.
@@ -160,6 +195,10 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
     data_->clear_data();
     requestList.clear();
     temp_id = id_list;
+    all_temp = 0;
+    all_min = 0;
+    all_max = 0;
+    temps.clear();
 
     qDebug() << "uus runi";
     // loop over selected ids.
@@ -210,6 +249,7 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
                 QNetworkRequest request(url);
                 request.setRawHeader("x-api-key", "f7yYNeOR2W38fAXGGWWzG9T8avve3Yvl1cGv4op6");
                 std::pair<QUrl, int> pair = std::make_pair(url, i);
+                calculate_average_temp(days, id_list.at(i));
                 requestList.insert(pair);
                 manager_.get(request);
             }

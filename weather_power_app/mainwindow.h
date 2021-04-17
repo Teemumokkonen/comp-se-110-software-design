@@ -51,6 +51,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QChart * getChart() const;
+    void LcdAverage(double average);
+    void LcdMin(double average);
+    void LcdMax(double average);
 
 signals:
     void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id, QString place);
@@ -73,8 +76,6 @@ private slots:
     void showAppInfo();
 
     void showAboutInfo(QString file);
-
-
 
 private:
 

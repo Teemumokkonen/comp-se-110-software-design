@@ -204,4 +204,17 @@ void MainWindow::showAboutInfo(QString file)
 
 }
 
+void MainWindow::LcdAverage(double average)
+{
+    ui->lcdNumberAVG->display(average);
+}
 
+void MainWindow::LcdMin(double average)
+{
+    ui->lcdNumbermin->display(average);
+}
+
+void MainWindow::LcdMax(double average)
+{
+    ui->lcdNumbermax->display(average);
+}
