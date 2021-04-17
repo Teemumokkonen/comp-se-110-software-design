@@ -51,9 +51,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QChart * getChart() const;
+
     void checkBoxText(int slot, QString text);
     std::vector<int> selectedBoxes();
     void retrievePrefBoxes(std::vector<int> boxes);
+
+    void LcdAverage(double average);
+    void LcdMin(double average);
+    void LcdMax(double average);
 
 signals:
     void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id, QString place);
@@ -83,7 +88,6 @@ private slots:
     void prefButton2clicked();
     void saveButton1clicked();
     void saveButton2clicked();
-
 
 private:
 

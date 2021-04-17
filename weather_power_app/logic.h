@@ -13,7 +13,8 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
-
+#include <map>
+#include <QSignalMapper>
 
 class Logic : public QObject
 {
@@ -39,14 +40,17 @@ private slots:
     void fileIsReady(QNetworkReply* reply);
 
     // parses data from temporary file and sends it to data object to saved locally.
-    void parseData(QString file);
+    void parseData(QString file, int i);
 
     // draws graph based on data that user has chosen.
-    void draw_graph();
+    void draw_graph(int i);
 
     void prefButtonclicked(int slot, bool status, std::vector<int> boxes);
 
     void saveButtonclicked(int slot, bool status, std::vector<int> boxes);
+
+    void calculate_average_temp(double day, int id);
+    void calculate_powerforms(int id);
 
 private:
     MainWindow w_;
@@ -57,6 +61,22 @@ private:
     std::vector<QValueAxis *> axisY_list;
 
     std::vector<int> temp_id;
+    std::vector<double> temp_AVG;
+    std::vector<double> temp_AVGmin;
+    std::vector<double> temp_AVGmax;
+    std::vector<double> temps;
+
+    std::vector<double> Hydro;
+    std::vector<double> Nuclear;
+    std::vector<double> Wind;
+    std::vector<double> Electricity;
+    double all_min;
+    double all_max;
+    double all_temp;
+    double all_elec;
+    double all_nuke;
+    double all_wind;
+    double all_hydro;
 
     // Ids for getting needed data from fingrid
     std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
@@ -77,10 +97,14 @@ private:
 
     void setCheckBoxText();
 
+
     double value;
     int id;
-    int variable_id;
     std::string time;
     bool date_checker = false;
+    std::map<QUrl, int> requestList;
+    QUrl url;
+    std::pair<QUrl, int> pair;
+
 };
 #endif // LOGIC_H

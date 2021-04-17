@@ -30,9 +30,9 @@
     <property name="geometry">
      <rect>
       <x>1030</x>
-      <y>580</y>
-      <width>203</width>
-      <height>66</height>
+      <y>550</y>
+      <width>271</width>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -41,7 +41,21 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Average Temperature</string>
+          <string>Average max temperature</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Average temperature</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Average min temperatue</string>
          </property>
         </widget>
        </item>
@@ -52,22 +66,18 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Averaga humidy</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLCDNumber" name="lcdNumber"/>
+        <widget class="QLCDNumber" name="lcdNumbermax"/>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_3"/>
+        <widget class="QLCDNumber" name="lcdNumberAVG"/>
+       </item>
+       <item>
+        <widget class="QLCDNumber" name="lcdNumbermin"/>
        </item>
       </layout>
      </item>
