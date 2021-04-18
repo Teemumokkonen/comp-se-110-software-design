@@ -23,6 +23,7 @@ Saving preference settings:
 -Click preference slot
 -Uncheck check box (right hand side of the preference button)
 -Now your preferences are saved and clicking preference slot will make all saved boxes active
+
 Saving data settings:
 -Check check box (right hand side of the saved data button)
 -Check either predicted wind or predicted temperature checkbox 
@@ -30,8 +31,10 @@ Saving data settings:
 -Click saved data slot button
 -Uncheck check box (right hand side of the saved data button)
 -Now your data is saved and clicking saved data slot will draw the data
+
 LCD numbers:
 To update LCD numbers you must click fetch button every time when new data is drawn into calendar. If user does not click fetch button LCD numbers might show incorrect numbers.
+
 Nice to know:
 -Clicking calendar when no check boxes active the graph window will be cleared
 -If user make mistake during saving preferences or data, the file could be corrupted, and user must clear the whole file manually. Text files “debugpreferences” and “debugsaves” are located in build folder.
