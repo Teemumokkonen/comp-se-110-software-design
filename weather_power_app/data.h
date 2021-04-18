@@ -20,14 +20,17 @@ public:
     // for debugging push_data method
     void show_data(int id, QLineSeries *series);
 
+    // Clears named data
     void clear_data();
     void clear_save_data(int id);
 
+    // Copies data if the data is to be saved during current session
     void copy_old_data(int old_data, int new_data);
+    // Sets data to be old if it is not to be saved on current session
     void set_old_data(int id, std::vector<std::pair<double,
                       std::string>> series);
 
-    //Parses data values for logic to use
+    // Parses/returns data values for logic to use
     std::vector<double> get_AVG_temp();
     std::vector<double> get_AVG_max();
     std::vector<double> get_AVG_min();
@@ -51,7 +54,6 @@ private:
     std::vector<double> Wind;
     std::vector<double> Electricity;
     std::vector<std::pair<double, std::string>> saveslot1;
-    std::vector<std::pair<double, std::string>> saveslot2;
 
 
 

@@ -71,11 +71,6 @@ void Data::show_data(int id, QLineSeries *series)
                     saveslot1.push_back(std::pair<double,
                                         std::string>(iter->first, iter->second));
                 }
-                // Save slot 1
-                else if(id == 302){
-                    saveslot2.push_back(std::pair<double,
-                                        std::string>(iter->first, iter->second));
-                }
             }
         }
     }

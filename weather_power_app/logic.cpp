@@ -129,7 +129,7 @@ void Logic::draw_graph(int i)
     Wind = data_->get_Wind();
 
     // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
-    if(i == 301 || i == 302) {
+    if(i == 301) {
         series->setName("Saved data");
         axisY->setLabelFormat("%i");
         axisY->setTitleText("Saved data");
@@ -189,16 +189,20 @@ void Logic::prefButtonclicked(int slot, bool status, std::vector<int> boxes)
 void Logic::saveButtonclicked(int slot, bool status, std::vector<int> boxes)
 {
 
-    std::vector<std::pair<double, std::string>> ids = saves_->get_entry(slot);
+    std::vector<std::pair<double, std::string>> saves = saves_->get_entry(slot);
     if(status == false) {
-        if(!ids.empty()) {
-            // clear vanha?
-            data_->set_old_data(slot + 300, ids);
+        if(!saves.empty()) {
+            data_->set_old_data(slot + 300, saves);
+            for(auto element : axisY_list) {
+                if(element != nullptr) {
+                    w_.getChart()->removeAxis(element);
+                }
+            }
             draw_graph(slot + 300);
         }
 
     } else {
-            if(!ids.empty()) {
+            if(!saves.empty()) {
                 saves_->remove_save_entry(slot);
                 data_->clear_save_data(slot + 300);
                 w_.checkBoxText(slot + 2, "Empty");

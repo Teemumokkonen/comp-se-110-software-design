@@ -46,11 +46,15 @@ private slots:
     // draws graph based on data that user has chosen.
     void draw_graph(int i);
 
+    // Buttons for saving preferences or forecast data
     void prefButtonclicked(int slot, bool status, std::vector<int> boxes);
     void saveButtonclicked(int slot, bool status, std::vector<int> boxes);
 
+    // Calculates the data to be displayed in the LCD displays
     void calculate_average_temp(double day, int id);
     void calculate_powerforms(int id);
+
+    // Clears all the temporary values
     void clear_values();
 
 private:
@@ -83,6 +87,7 @@ private:
     // Ids for getting needed data from fingrid
     std::vector<int> electricity_id = {ELECTRICITY_CONSUMPTION, ELECTRICITY_PRODUCTION, WIND_POWER_PRODUCTION,
                            NUCLEAR_POWER_PRODUCTION, HYDRO_POWER_PRODUCTION, ELECTRICITY_FORECAST, TENTATIVE_PRODUCTION_PREDICTION};
+
     // Ids for saving fmi data
     std::vector<int> weather_id = {TEMPERATURE_ID, OBSERVED_WIND, OBSERVED_CLOUDINESS, PREDICTED_WIND, PREDICTED_TEMPERATURE, AVERAGE_TEMP, MAX_TEMP, MIN_TEMP};
 
