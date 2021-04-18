@@ -21,6 +21,11 @@ public:
     void show_data(int id, QLineSeries *series);
 
     void clear_data();
+    void clear_save_data(int id);
+
+    void copy_old_data(int old_data, int new_data);
+    void set_old_data(int id, std::vector<std::pair<double,
+                      std::string>> series);
 
     //Parses data values for logic to use
     std::vector<double> get_AVG_temp();
@@ -30,7 +35,7 @@ public:
     std::vector<double> get_Wind();
     std::vector<double> get_Hydro();
     std::vector<double> get_Nuclear();
-
+    std::vector<std::pair<double, std::string>> get_Save_Data(int id);
 
 private:
 
@@ -45,6 +50,9 @@ private:
     std::vector<double> Nuclear;
     std::vector<double> Wind;
     std::vector<double> Electricity;
+    std::vector<std::pair<double, std::string>> saveslot1;
+    std::vector<std::pair<double, std::string>> saveslot2;
+
 
 
 };

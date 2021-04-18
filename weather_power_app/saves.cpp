@@ -32,7 +32,7 @@ void Saves::read_save_file()
             QStringList list = line.split(',', Qt::SkipEmptyParts);
             std::vector<std::string> temp_vector_2;
             for ( int i = 0; list.size() > i; i++ ) {
-                temp_vector_2.push_back(temp_vector_2.at(i));
+                temp_vector_2.push_back(list.at(i).toUtf8().constData());
             }
             std::vector<std::pair<double, std::string>> temp_vector_3;
             for ( unsigned int i = 0; temp_vector_2.size() > i; i++ ) {
@@ -56,30 +56,31 @@ void Saves::write_save_file()
         return;
     }
     QTextStream out(&file_);
-    std::string line = "";
-    std::string tempLine;
+    QString line = "";
+    QString tempLine;
+    QString tempLine2;
     int count = 0;
     for ( auto it = entries_.begin(); it != entries_.end(); it++ ) {
-        if( count % 2 == 0) {
-            tempLine = std::to_string(it->first);
-            for ( unsigned int i = 0; i < it->second.size(); i++) {
-                tempLine.push_back(',');
-                tempLine += std::to_string(it->second.at(i).first);
-            }
-            count++;
-
-        } else {
-            for ( unsigned int i = 0; i < it->second.size(); i++) {
-                tempLine.push_back(',');
-                tempLine += it->second.at(i).second;
-            }
-            count++;
+        if(count != 0) {
+            line.push_back("\n");
         }
-        tempLine += "\n";
-        line += tempLine;
+        tempLine.push_back(QString::number(it->first));
+        for ( unsigned int i = 0; i < it->second.size(); i++) {
+            tempLine.push_back(',');
+            tempLine.push_back(QString::number(it->second.at(i).first));
+        }
+        line.push_back(tempLine);
+        line.push_back("\n");
+        for ( unsigned int i = 0; i < it->second.size(); i++) {
+            if(i != 0) {
+                 tempLine2.push_back(',');
+            }
+            tempLine2.push_back(QString::fromStdString(it->second.at(i).second));
+        }
+        count++;
+        line.push_back(tempLine2);
     }
-
-    out << QString::fromStdString(line);
+    out << line;
     file_.close();
 }
 

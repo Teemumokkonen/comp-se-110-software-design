@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->prefButton1, &QPushButton::clicked, this, &MainWindow::prefButton1clicked);
     connect(ui->prefButton2, &QPushButton::clicked, this, &MainWindow::prefButton2clicked);
     connect(ui->saveButton1, &QPushButton::clicked, this, &MainWindow::saveButton1clicked);
-    connect(ui->saveButton2, &QPushButton::clicked, this, &MainWindow::saveButton2clicked);
     connect(ui->pushButton_fetch, &QPushButton::clicked, this, &MainWindow::getDate);
 
     ui->save_label->setVisible(false);
@@ -56,11 +55,9 @@ void MainWindow::checkBoxText(int slot, QString text)
     } else if(slot == 2) {
         ui->statusChange2->setText(text);
 
-    } else if(slot == 3) {
+    } else {
        ui->statusChange3->setText(text);
 
-    } else {
-       ui->statusChange4->setText(text);
     }
 }
 
@@ -291,16 +288,6 @@ void MainWindow::saveButton1clicked()
     }
 }
 
-void MainWindow::saveButton2clicked()
-{
-    std::vector<int> temp_vector = selectedBoxes();
-    if(ui->statusChange4->checkState() != Qt::Checked ) {
-        emit sendSaveInfo(2, false, temp_vector);
-
-    } else {
-        emit sendSaveInfo(2, true, temp_vector);
-    }
-}
 void MainWindow::LcdAverage(double average)
 {
     ui->lcdNumberAVG->display(average);

@@ -47,7 +47,6 @@ private slots:
     void draw_graph(int i);
 
     void prefButtonclicked(int slot, bool status, std::vector<int> boxes);
-
     void saveButtonclicked(int slot, bool status, std::vector<int> boxes);
 
     void calculate_average_temp(double day, int id);

@@ -90,7 +90,6 @@ private slots:
     void prefButton1clicked();
     void prefButton2clicked();
     void saveButton1clicked();
-    void saveButton2clicked();
 
 private:
 

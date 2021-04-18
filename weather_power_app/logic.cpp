@@ -110,9 +110,12 @@ void Logic::draw_graph(int i)
     //lineseries
     QSplineSeries *series  = new QSplineSeries;
     QValueAxis * axisY = new QValueAxis;
-
-    // fetch data from data object and add it to chart.
-    data_->show_data(temp_id.at(i), series);
+    if(i == 301 || i == 302) {
+        data_->show_data(i, series);
+    } else {
+        // fetch data from data object and add it to chart.
+        data_->show_data(temp_id.at(i), series);
+    }
     w_.getChart()->addSeries(series);
 
     //Formats the data
@@ -126,7 +129,13 @@ void Logic::draw_graph(int i)
     Wind = data_->get_Wind();
 
     // add y-axis for the graph, 100 is here because all id_from fingrid are > 100 and from fmi < 100
-    if(temp_id.at(i) < 100) {
+    if(i == 301 || i == 302) {
+        series->setName("Saved data");
+        axisY->setLabelFormat("%i");
+        axisY->setTitleText("Saved data");
+        w_.getChart()->addAxis(axisY, Qt::AlignLeft);
+
+    } else if(temp_id.at(i) < 100) {
         auto it = std::find(weather_id.begin(), weather_id.end(), temp_id.at(i));
         int index = std::distance(weather_id.begin(), it);
         series->setName(labels.at(index));
@@ -134,14 +143,13 @@ void Logic::draw_graph(int i)
         axisY->setTitleText(labels.at(index) + " (" + units.at(index) + ")");
         w_.getChart()->addAxis(axisY, Qt::AlignLeft);
 
-    } else if (temp_id.at(i) < 200) {
+    } else if (temp_id.at(i) < 300) {
         auto it = std::find(electricity_id.begin(), electricity_id.end(), temp_id.at(i));
         int index = std::distance(electricity_id.begin(), it);
         series->setName(electricity_labels.at(index));
         axisY->setLabelFormat("%i");
         axisY->setTitleText(electricity_labels.at(index) + " (MWh/h)");
         w_.getChart()->addAxis(axisY, Qt::AlignLeft);
-
     }
 
     // attach y-axis to certain series so that multiple lineseries can be dispayel at the same time
@@ -167,7 +175,7 @@ void Logic::prefButtonclicked(int slot, bool status, std::vector<int> boxes)
         w_.retrievePrefBoxes(ids);
 
     } else {
-        if (!ids.empty()) {
+        if(!ids.empty()) {
             preference_->remove_preference_entry(slot);
             w_.checkBoxText(slot, "Empty");
 
@@ -180,14 +188,48 @@ void Logic::prefButtonclicked(int slot, bool status, std::vector<int> boxes)
 
 void Logic::saveButtonclicked(int slot, bool status, std::vector<int> boxes)
 {
-    // Tarvii sen toisen vittusaatanan!!!
-    // tähän tulee kun klikataan save buttoneita
-    //idt 200 ja 201
+
+    std::vector<std::pair<double, std::string>> ids = saves_->get_entry(slot);
+    if(status == false) {
+        if(!ids.empty()) {
+            // clear vanha?
+            data_->set_old_data(slot + 300, ids);
+            draw_graph(slot + 300);
+        }
+
+    } else {
+            if(!ids.empty()) {
+                saves_->remove_save_entry(slot);
+                data_->clear_save_data(slot + 300);
+                w_.checkBoxText(slot + 2, "Empty");
+
+            } else {
+                if(!boxes.empty()) {
+                    int chosen_id;
+                    for ( unsigned int i = 0; i < boxes.size(); i++ ) {
+                        if(boxes.at(i) == 13 || boxes.at(i) == 14) {
+                            chosen_id = boxes.at(i) - 9;
+
+                        } else if(boxes.at(i) == 5) {
+                            chosen_id = 166;
+
+                        } else if(boxes.at(i) == 6) {
+                            chosen_id = 242;
+                        }
+                    }
+                    data_->copy_old_data(chosen_id, slot + 300);
+                    std::vector<std::pair<double, std::string>> datas =
+                            data_->get_Save_Data(slot + 300);
+                    saves_->new_save_entry(slot, datas);
+                    w_.checkBoxText(slot + 2, "Has Data");
+            }
+        }
+    }
 }
 
 void Logic::setCheckBoxText()
 {
-    for(int i = 1; i < 5; i++) {
+    for(int i = 1; i < 4; i++) {
         if(i == 1 || i == 2) {
             if(preference_->get_entry(i).empty()) {
                 w_.checkBoxText(i, "Empty");
@@ -197,14 +239,12 @@ void Logic::setCheckBoxText()
             }
         } else {
             int j = i - 2;
-            /*if(??(j).empty()) {
+            if(saves_->get_entry(j).empty()) {
                 w_.checkBoxText(i, "Empty");
 
             } else {
                 w_.checkBoxText(i, "Has Data");
-            }*/
-            // TULEE SAVET toisesta vittusaatanasta
-            // settaa savejen tekstit slotit 3 ja 4.
+            }
         }
     }
 }
