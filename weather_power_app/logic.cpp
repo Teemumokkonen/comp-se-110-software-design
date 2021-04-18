@@ -247,23 +247,37 @@ void Logic::calculate_powerforms(int id)
         for(std::vector<double>::iterator it_temp = Wind.begin(); it_temp !=Wind.end(); ++it_temp){
             all_wind += *it_temp;
         }
-        qDebug()<<"Elec to wind (%)";
-        qDebug()<<all_wind/all_elec *100;
+        double calculation = all_wind/all_elec *100;
+        w_.LcdWind(calculation);
 
     } else if(id == NUCLEAR_POWER_PRODUCTION){
         for(std::vector<double>::iterator it_temp = Nuclear.begin(); it_temp !=Nuclear.end(); ++it_temp){
             all_nuke += *it_temp;
         }
-        qDebug()<<"Elec to nuke (%)";
-        qDebug()<<all_nuke/all_elec *100;
+        double calculation = all_nuke/all_elec *100;
+        w_.LcdNuclear(calculation);
+
     } else if(id == HYDRO_POWER_PRODUCTION) {
         for(std::vector<double>::iterator it_temp = Hydro.begin(); it_temp !=Hydro.end(); ++it_temp){
             all_hydro += *it_temp;
-
         }
-        qDebug()<<"Elec to hydro (%)";
-        qDebug()<<all_hydro/all_elec *100;
+        double calculation = all_hydro/all_elec *100;
+        w_.LcdHydro(calculation);
     }
+}
+
+void Logic::clear_values()
+{
+    data_->clear_data();
+    requestList.clear();
+    all_temp = 0;
+    all_min = 0;
+    all_max = 0;
+    all_elec = 0;
+    all_nuke = 0;
+    all_wind = 0;
+    all_hydro = 0;
+    temps.clear();
 }
 
 void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QString place)
@@ -283,17 +297,8 @@ void Logic::getDataTimes(QDate start, QDate end, std::vector<int> id_list, QStri
     date_checker = false;
 
     // clear the data object so that there can be added new data.
-    data_->clear_data();
-    requestList.clear();
     temp_id = id_list;
-    all_temp = 0;
-    all_min = 0;
-    all_max = 0;
-    all_elec = 0;
-    all_nuke = 0;
-    all_wind = 0;
-    all_hydro = 0;
-    temps.clear();
+    clear_values();
 
     // loop over selected ids.
     for(unsigned long int i = 0; i < id_list.size(); i++) {

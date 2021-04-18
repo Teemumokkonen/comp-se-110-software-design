@@ -29,8 +29,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>1030</x>
-      <y>550</y>
+      <x>1230</x>
+      <y>30</y>
       <width>271</width>
       <height>101</height>
      </rect>
@@ -56,13 +56,6 @@
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Average min temperatue</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -100,7 +93,7 @@
     <property name="geometry">
      <rect>
       <x>1030</x>
-      <y>650</y>
+      <y>590</y>
       <width>161</width>
       <height>51</height>
      </rect>
@@ -227,8 +220,8 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>1501</width>
-      <height>531</height>
+      <width>1201</width>
+      <height>541</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout"/>
@@ -335,7 +328,7 @@
     <property name="geometry">
      <rect>
       <x>1030</x>
-      <y>720</y>
+      <y>660</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -374,7 +367,7 @@
     <property name="geometry">
      <rect>
       <x>1030</x>
-      <y>740</y>
+      <y>680</y>
       <width>72</width>
       <height>22</height>
      </rect>
@@ -429,7 +422,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>1120</x>
+      <x>1030</x>
       <y>720</y>
       <width>181</width>
       <height>41</height>
@@ -442,7 +435,7 @@
    <widget class="QLabel" name="save_label">
     <property name="geometry">
      <rect>
-      <x>1120</x>
+      <x>1030</x>
       <y>770</y>
       <width>171</width>
       <height>16</height>
@@ -455,7 +448,7 @@
    <widget class="QPushButton" name="prefButton1">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1240</x>
       <y>590</y>
       <width>100</width>
       <height>40</height>
@@ -469,7 +462,7 @@ slot 1</string>
    <widget class="QCheckBox" name="statusChange1">
     <property name="geometry">
      <rect>
-      <x>1450</x>
+      <x>1360</x>
       <y>590</y>
       <width>100</width>
       <height>40</height>
@@ -482,7 +475,7 @@ slot 1</string>
    <widget class="QPushButton" name="prefButton2">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1240</x>
       <y>640</y>
       <width>100</width>
       <height>40</height>
@@ -496,7 +489,7 @@ slot 2</string>
    <widget class="QPushButton" name="saveButton1">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1240</x>
       <y>690</y>
       <width>100</width>
       <height>40</height>
@@ -510,7 +503,7 @@ slot 1</string>
    <widget class="QPushButton" name="saveButton2">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1240</x>
       <y>740</y>
       <width>100</width>
       <height>40</height>
@@ -524,7 +517,7 @@ slot 2</string>
    <widget class="QCheckBox" name="statusChange2">
     <property name="geometry">
      <rect>
-      <x>1450</x>
+      <x>1360</x>
       <y>640</y>
       <width>100</width>
       <height>40</height>
@@ -537,7 +530,7 @@ slot 2</string>
    <widget class="QCheckBox" name="statusChange3">
     <property name="geometry">
      <rect>
-      <x>1450</x>
+      <x>1360</x>
       <y>690</y>
       <width>100</width>
       <height>40</height>
@@ -550,7 +543,7 @@ slot 2</string>
    <widget class="QCheckBox" name="statusChange4">
     <property name="geometry">
      <rect>
-      <x>1450</x>
+      <x>1360</x>
       <y>740</y>
       <width>100</width>
       <height>40</height>
@@ -563,7 +556,7 @@ slot 2</string>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>1440</x>
+      <x>1350</x>
       <y>550</y>
       <width>80</width>
       <height>30</height>
@@ -577,6 +570,95 @@ Empty/Has data </string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>170</y>
+      <width>271</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="Wind">
+         <property name="text">
+          <string>Wind ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Nuclear">
+         <property name="text">
+          <string>Nuclear ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Hydro">
+         <property name="text">
+          <string>Hydro ratio</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLCDNumber" name="lcdNumberWind"/>
+       </item>
+       <item>
+        <widget class="QLCDNumber" name="lcdNumberNuclear"/>
+       </item>
+       <item>
+        <widget class="QLCDNumber" name="lcdNumberHydro"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>150</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Powerform ratio (%):</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>10</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Average temperatures (C):</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_fetch">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>280</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fetch</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -584,7 +666,7 @@ Empty/Has data </string>
      <x>0</x>
      <y>0</y>
      <width>1550</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuperse">

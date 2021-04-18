@@ -59,6 +59,9 @@ public:
     void LcdAverage(double average);
     void LcdMin(double average);
     void LcdMax(double average);
+    void LcdNuclear(double data);
+    void LcdHydro(double data);
+    void LcdWind(double data);
 
 signals:
     void sendDateInformation(QDate startDate, QDate EndDate, std::vector<int> id, QString place);

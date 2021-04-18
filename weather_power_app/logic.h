@@ -51,6 +51,7 @@ private slots:
 
     void calculate_average_temp(double day, int id);
     void calculate_powerforms(int id);
+    void clear_values();
 
 private:
     MainWindow w_;
