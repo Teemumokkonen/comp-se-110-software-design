@@ -15,10 +15,20 @@ class Preference : public QObject
 public:
     Preference();
     ~Preference();
+
+    // Reads the file
     void read_preference_file();
+
+    // Writes to the file
     void write_preference_file();
+
+    // Add a new etry to the data structure
     void new_preference_entry(int slot, std::vector<int> settings);
+
+    // Removes an entry from the data structure
     void remove_preference_entry(int slot);
+
+    // Return a specific entry based on a slot
     std::vector<int> get_entry(int slot);
 
 private:

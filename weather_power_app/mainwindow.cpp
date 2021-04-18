@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->prefButton2, &QPushButton::clicked, this, &MainWindow::prefButton2clicked);
     connect(ui->saveButton1, &QPushButton::clicked, this, &MainWindow::saveButton1clicked);
     connect(ui->saveButton2, &QPushButton::clicked, this, &MainWindow::saveButton2clicked);
-    connect(ui->pushButton_fetch, QPushButton::clicked, this, &MainWindow::getDate);
+    connect(ui->pushButton_fetch, &QPushButton::clicked, this, &MainWindow::getDate);
 
     ui->save_label->setVisible(false);
 

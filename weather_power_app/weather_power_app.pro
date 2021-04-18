@@ -16,13 +16,15 @@ SOURCES += \
     logic.cpp \
     main.cpp \
     mainwindow.cpp \
-    preference.cpp
+    preference.cpp \
+    saves.cpp
 
 HEADERS += \
     data.h \
     logic.h \
     mainwindow.h \
-    preference.h
+    preference.h \
+    saves.h
 
 FORMS += \
     mainwindow.ui

@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "data.h"
 #include "preference.h"
+#include "saves.h"
 #include <QTemporaryFile>
 #include <QNetworkReply>
 #include <QFileDialog>
@@ -58,6 +59,7 @@ private:
     QNetworkAccessManager manager_;
     Data* data_;
     Preference* preference_;
+    Saves* saves_;
     QDateTimeAxis *axisX;
     std::vector<QValueAxis *> axisY_list;
 

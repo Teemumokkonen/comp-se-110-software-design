@@ -9,6 +9,8 @@ Logic::Logic()
 void Logic::init(){
 
     preference_ = new Preference();
+    saves_ = new Saves();
+    saves_->read_save_file();
     preference_->read_preference_file();
     data_ = new Data();
     w_.show();
@@ -131,9 +133,8 @@ void Logic::draw_graph(int i)
         axisY->setLabelFormat("%i");
         axisY->setTitleText(labels.at(index) + " (" + units.at(index) + ")");
         w_.getChart()->addAxis(axisY, Qt::AlignLeft);
-    }
 
-    else  {
+    } else if (temp_id.at(i) < 200) {
         auto it = std::find(electricity_id.begin(), electricity_id.end(), temp_id.at(i));
         int index = std::distance(electricity_id.begin(), it);
         series->setName(electricity_labels.at(index));
@@ -181,6 +182,7 @@ void Logic::saveButtonclicked(int slot, bool status, std::vector<int> boxes)
 {
     // Tarvii sen toisen vittusaatanan!!!
     // tähän tulee kun klikataan save buttoneita
+    //idt 200 ja 201
 }
 
 void Logic::setCheckBoxText()
